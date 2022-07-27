@@ -27,6 +27,14 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.boot:spring-boot-test:2.7.0")
+  testImplementation("com.github.tomakehurst:wiremock:2.27.2")
+  testImplementation("io.rest-assured:spring-mock-mvc:4.5.1")
+
+  //Kotli test
+  testImplementation("org.jetbrains.kotlin:kotlin-test")
+  testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+  testImplementation("com.nhaarman:mockito-kotlin:1.6.0")
 }
 
 tasks.withType<KotlinCompile> {
