@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus.CREATED
+import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.test.context.support.WithSecurityContext
+import org.springframework.security.test.context.support.WithSecurityContextFactory
+import org.springframework.security.test.context.support.WithUserDetails
 
 
 class UserCreateFeature : IntegrationTest() {

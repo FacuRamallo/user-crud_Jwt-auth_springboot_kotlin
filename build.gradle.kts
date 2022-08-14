@@ -21,12 +21,14 @@ repositories {
 
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-security")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.security:spring-security-test")
   testImplementation("org.springframework.boot:spring-boot-test:2.7.0")
   testImplementation("com.github.tomakehurst:wiremock:2.27.2")
   testImplementation("io.rest-assured:spring-mock-mvc:4.5.1")
