@@ -1,4 +1,29 @@
 spring:
+  profiles:
+    active: dev
   security:
     user:
       password: "Qwer4321"
+  datasource:
+    url: "jdbc:postgresql://${database.host}:${database.port}/${database.name}"
+    username: "${database.username}"
+    password: "${database.password}"
+    driver-class-name: "org.postgresql.Driver"
+    hikari:
+      minimumIdle: 2
+      maximumPoolSize: 10
+      idleTimeout: 120000
+      connectionTimeout: 300000
+      leakDetectionThreshold: 300000
+  flyway:
+    enabled: true
+
+database:
+  host: "localhost"
+  port: 5432
+  name: "backend-coding"
+  username: "root"
+  password: "backend"
+
+bookshelf.app.jwtSecret: xGVgsxuqBU3xuv9J
+bookshelf.app.expirationMs: 86400000

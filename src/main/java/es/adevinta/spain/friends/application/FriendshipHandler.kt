@@ -3,7 +3,7 @@ package es.adevinta.spain.friends.application
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.UserNotFoundException
+import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
 import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import es.adevinta.spain.friends.domain.Friend
 
@@ -14,7 +14,7 @@ class FriendshipHandler(
   fun reqFriendship(reqUserName: String, newFriendName: String){
 
     val currentUser = UserName(reqUserName)
-    if(!userRepository.exist(UserName(newFriendName))) throw UserNotFoundException()
+    if(!userRepository.exist(UserName(newFriendName))) throw UserNameNotFoundException(reqUserName)
     val friendUserName = UserName(newFriendName)
 
     friendshipRepository.reqFriendship(currentUser, friendUserName)

@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:14.2
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "backend"
+      POSTGRES_DB: "backend-coding"

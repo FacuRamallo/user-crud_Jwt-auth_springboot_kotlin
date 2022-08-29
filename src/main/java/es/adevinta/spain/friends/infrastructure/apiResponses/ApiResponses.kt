@@ -1,10 +1,13 @@
 package es.adevinta.spain.friends.infrastructure.apiResponses
 
-import es.adevinta.spain.friends.infrastructure.controller.dtos.NewUserDto
+import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
 import es.adevinta.spain.friends.domain.Friend
+import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -15,19 +18,34 @@ enum class ApiResponses(
   private val statusCode: HttpStatus,
 ){
   OK_201(
-    "Nuevo usuario creado con éxito",
+    "New User created successfully",
     "Ok_201",
     CREATED
   ),
   OK_202(
-  "Registered Users",
-  "Ok_202",
-    OK
-  ),
-  OK_203(
-    "Frienship request sent",
+    "User authenticated",
     "Ok_203",
     OK
+  ),
+  ERROR_100(
+    "User name must contain from 5 to 10 alphanumerical characters",
+    "Error_100",
+    BAD_REQUEST
+  ),
+  ERROR_101(
+    "Password must contain from 8 to 12 alphanumerical characters",
+    "Error_101",
+    BAD_REQUEST
+  ),
+  ERROR_102(
+    "Username already taken",
+    "Error_102",
+    BAD_REQUEST
+  ),
+  ERROR_103(
+    "An error occured while creating the new user, Please try again later.",
+    "Error_102",
+    INTERNAL_SERVER_ERROR
   );
 
   fun response(): ResponseEntity<String> {
@@ -41,14 +59,14 @@ enum class ApiResponses(
     )
   }
 
-  fun usersResponse(users: List<NewUserDto>): ResponseEntity<String> {
+  fun jwtResponse(loggedUser: LoggedUserDto): ResponseEntity<String> {
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = users.map { "{\"Username\":\"${it.userName}\",\"Password\":${it.password}}"}
+    val responseBody = "{\"Username\":\"${loggedUser.username}\",\"roles\":\"${loggedUser.roles}\",\"token\":\"${loggedUser.token}\",\"tokenType\":\"${loggedUser.tokenType}\"}"
 
     return ResponseEntity(
-      "$responseBody",
+      responseBody,
       responseHeaders,
       statusCode
     )
