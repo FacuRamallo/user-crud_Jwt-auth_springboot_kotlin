@@ -15,17 +15,19 @@ import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import org.junit.jupiter.api.Test
 import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
+import es.adevinta.spain.friends.services.PasswordEncoderService
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 private val newUserWhithWrongUserName = SignInDto("usuario1+`´ç","abc1234")
 private val newUserWhithWrongPassword = SignInDto("usuario1","abc1234`+ç´¡''¡¡")
 private val signInDto = SignInDto("usuarioOK","abcd1234")
-private val newUser = User(UserName("usuarioOK"),PassWord("abcd1234"))
+private val newUser = User(UserName("usuarioOK"),"abcd1234")
 class RegisterUserShould {
 
   private val userRepository = mock<UserRepository>()
-  private val registerUser = RegisterUser(userRepository)
+  private val passwordEncoderService = mock<PasswordEncoderService>()
+  private val registerUser = RegisterUser(userRepository,passwordEncoderService)
 
   @Test
   fun `fail when userName contains non alphanumerical characters`(){
@@ -93,7 +95,7 @@ class RegisterUserShould {
 
     verify(userRepository).add(userCaptorAdd.capture())
 
-    assertEquals(newUser.getRoles().elementAt(0).name, userCaptorAdd.firstValue.getRoles().elementAt(0).name)
+    assertEquals(newUser.roles.elementAt(0).name, userCaptorAdd.firstValue.roles.elementAt(0).name)
 
   }
 

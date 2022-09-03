@@ -1,6 +1,6 @@
-package es.adevinta.spain.friends.infraestructure.database
+package es.adevinta.spain.friends.integrationTests.database
 
-import es.adevinta.spain.friends.infraestructure.IntegrationTest
+import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import javax.sql.DataSource
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

@@ -5,6 +5,7 @@ import es.adevinta.spain.friends.auth.JwtUtils
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -15,6 +16,8 @@ class AuthenticateUser(
   private val authenticationManager: AuthenticationManager,
   private val jwtUtils: JwtUtils,
 ) {
+
+
 
   fun authenticate(signInDto: SignInDto): LoggedUserDto {
     val authentication: Authentication =

@@ -13,13 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody
 @Controller
 class UserControllerGet(val getUsers: GetUsers, val friendshipHandler: FriendshipHandler) {
 
-  @GetMapping("/v1/users")
-  fun getAll(): ResponseEntity<String> {
-    val users = getUsers.getAllUsers()
-
-    return OK_201.jwtResponse(users)
-  }
-
   @GetMapping("/v1/friendship")
   fun getFriends(@RequestBody userName: LoggedUserDto): ResponseEntity<String> {
     val friends : List<Friend?> = friendshipHandler.getAllFriendsOf(userName)

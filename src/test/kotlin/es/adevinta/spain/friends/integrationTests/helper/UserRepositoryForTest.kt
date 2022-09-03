@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.infraestructure.helper
+package es.adevinta.spain.friends.integrationTests.helper
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate

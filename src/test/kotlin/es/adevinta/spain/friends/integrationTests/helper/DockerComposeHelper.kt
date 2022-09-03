@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.infraestructure.helper
+package es.adevinta.spain.friends.integrationTests.helper
 
 import java.io.File
 import org.testcontainers.containers.DockerComposeContainer

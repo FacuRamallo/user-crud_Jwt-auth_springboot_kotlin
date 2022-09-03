@@ -1,35 +1,22 @@
-package es.adevinta.spain.friends.infraestructure.acceptance
+package es.adevinta.spain.friends.integrationTests.acceptance
 
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infraestructure.IntegrationTest
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses
+import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_100
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_101
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_102
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
-import es.adevinta.spain.friends.infrastructure.configuration.SecurityConfig
 import io.restassured.http.ContentType.JSON
-import io.restassured.http.ContentType.TEXT
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import org.assertj.core.api.Assertions.contentOf
-import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.HttpStatus.OK
-import org.springframework.http.HttpStatus.UNAUTHORIZED
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.test.context.support.WithAnonymousUser
-import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.test.context.ContextConfiguration
 
 class RegisterUserFeature : IntegrationTest() {
 
@@ -108,7 +95,7 @@ class RegisterUserFeature : IntegrationTest() {
 
   fun createTestUser(username: String, password: String) {
 
-    val testUser = User(UserName(username), PassWord(password))
+    val testUser = User(UserName(username), password)
     try {
       userRepository.add(testUser)
     }catch(e: Exception) {

@@ -7,6 +7,6 @@ class GetUsers(private val userRepository : UserRepository) {
 
   fun getAllUsers(): List<SignInDto>{
     val users = userRepository.getAll()
-    return users.map { SignInDto(it.username.value,it.password.value) }
+    return users.map { SignInDto(it.username.value,it.password) }
   }
 }

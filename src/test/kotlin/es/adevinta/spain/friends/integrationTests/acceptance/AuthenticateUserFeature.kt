@@ -1,22 +1,27 @@
-package es.adevinta.spain.friends.infraestructure.acceptance
+package es.adevinta.spain.friends.integrationTests.acceptance
+
 
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infraestructure.IntegrationTest
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_100
+import es.adevinta.spain.friends.integrationTests.IntegrationTest
+import es.adevinta.spain.friends.services.PasswordEncoderService
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
-import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus.OK
 
 class AuthenticateUserFeature : IntegrationTest() {
 
   @Value("classpath:json/newUser.json")
   private lateinit var userDto: Resource
+
+  @Autowired
+  lateinit var passwordEncoderService: PasswordEncoderService
 
   @Test
   fun `should authenticate user when login`(){
@@ -25,17 +30,17 @@ class AuthenticateUserFeature : IntegrationTest() {
     given()
       .contentType("application/json")
       .body(userDto.file)
-      .post("v1/singin")
+      .post("v1/authenticate")
       .then()
-      .status(BAD_REQUEST)
+      .status(OK)
       .contentType(JSON)
-      .body(Matchers.equalTo(ERROR_100.response().body))
+      .body(Matchers.containsString("\"Message\":\"User authenticated\""))
   }
 
 
   fun createTestUser(username: String, password: String) {
-
-    val testUser = User(UserName(username), PassWord(password))
+    val encodedPassword = passwordEncoderService.encodePassword(PassWord(password))
+    val testUser = User(UserName(username), encodedPassword)
     try {
       userRepository.add(testUser)
     }catch(e: Exception) {

@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
   id("org.springframework.boot") version "2.6.3"
@@ -22,9 +23,18 @@ repositories {
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-security")
+  implementation("org.springframework.boot:spring-boot-configuration-processor")
+
+
+    // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
+    //'org.bouncycastle:bcprov-jdk15on:1.70',
+   // or 'io.jsonwebtoken:jjwt-gson:0.11.5' for gson
+
 
   //jwt
   implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+  implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+  runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")

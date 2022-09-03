@@ -21,14 +21,14 @@ class CustomUserDetailsImpl private constructor(
 
     fun build(user: User): CustomUserDetailsImpl {
 
-      val authorities: List<GrantedAuthority> = user.getRoles().stream()
+      val authorities: List<GrantedAuthority> = user.roles.stream()
         .map { role -> SimpleGrantedAuthority(role.getRoleName()) }
         .collect(Collectors.toList())
 
       return CustomUserDetailsImpl(
         1L,
         user.username.value,
-        user.password.value,
+        user.password,
         authorities,
         true,
         true,

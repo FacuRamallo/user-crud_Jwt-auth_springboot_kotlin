@@ -24,7 +24,7 @@ enum class ApiResponses(
   ),
   OK_202(
     "User authenticated",
-    "Ok_203",
+    "Ok_202",
     OK
   ),
   ERROR_100(
@@ -63,7 +63,7 @@ enum class ApiResponses(
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = "{\"Username\":\"${loggedUser.username}\",\"roles\":\"${loggedUser.roles}\",\"token\":\"${loggedUser.token}\",\"tokenType\":\"${loggedUser.tokenType}\"}"
+    val responseBody = "{\"Message\":\"$message\",\"StatusCode\":${statusCode.value()},\"Code\":\"$code\",\"Username\":\"${loggedUser.username}\",\"roles\":\"${loggedUser.roles}\",\"token\":\"${loggedUser.token}\",\"tokenType\":\"${loggedUser.tokenType}\"}"
 
     return ResponseEntity(
       responseBody,

@@ -1,5 +1,7 @@
 package es.adevinta.spain.friends.domain
 
+import kotlin.String
+
 enum class Role(
   private var roleName: String
 ) {

@@ -1,6 +1,6 @@
-package es.adevinta.spain.friends.infraestructure.configuration
+package es.adevinta.spain.friends.integrationTests.configuration
 
-import es.adevinta.spain.friends.infraestructure.helper.UserRepositoryForTest
+import es.adevinta.spain.friends.integrationTests.helper.UserRepositoryForTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate

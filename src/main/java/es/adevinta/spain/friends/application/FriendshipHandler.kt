@@ -21,7 +21,7 @@ class FriendshipHandler(
   }
 
   fun getAllFriendsOf(loggedUserName: LoggedUserDto) : List<Friend?> {
-    val userName = UserName(loggedUserName.userName)
+    val userName = UserName(loggedUserName.username)
     return friendshipRepository.getFriends(userName)
   }
 }

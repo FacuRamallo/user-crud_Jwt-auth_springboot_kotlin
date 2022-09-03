@@ -7,20 +7,27 @@ import es.adevinta.spain.friends.application.auth.AuthenticateUser
 import es.adevinta.spain.friends.auth.JwtUtils
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserRepository
+import es.adevinta.spain.friends.services.PasswordEncoderService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class ApplicationConfiguration {
 
   @Bean
-  fun registerUser(userRepository : UserRepository) = RegisterUser(userRepository)
+  fun registerUser(
+    userRepository : UserRepository,
+    passwordEncoderService: PasswordEncoderService
+  ) = RegisterUser(userRepository, passwordEncoderService)
 
   @Bean
   fun authenticateUser(userRepository: UserRepository,
                        authenticationManager: AuthenticationManager,
-                       jwtUtils: JwtUtils
+                       jwtUtils: JwtUtils,
   ) = AuthenticateUser(userRepository,authenticationManager,jwtUtils)
 
   @Bean
@@ -31,4 +38,6 @@ class ApplicationConfiguration {
   @Bean
   fun getUser(userRepository : UserRepository) = GetUsers(userRepository)
 
+  @Bean
+  fun passwordEncoderService(passwordEncoder: PasswordEncoder) = PasswordEncoderService(passwordEncoder)
 }

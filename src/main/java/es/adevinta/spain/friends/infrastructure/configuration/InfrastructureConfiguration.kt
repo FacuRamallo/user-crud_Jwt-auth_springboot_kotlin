@@ -13,10 +13,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
 
 @Configuration
-class InfraestructureConfiguration {
+class InfrastructureConfiguration {
 
   @Bean
-  fun objectMapper() = jacksonObjectMapper().configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+  fun objectMapper(): ObjectMapper = jacksonObjectMapper().configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
   @Bean
   fun userRepository(
     jdbcTemplate: NamedParameterJdbcTemplate,

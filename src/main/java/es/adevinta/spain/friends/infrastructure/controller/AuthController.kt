@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class AuthController(val registerUser: RegisterUser, val authenticateUser: AuthenticateUser) {
 
-  @PostMapping("/v1/singin")
+  @PostMapping("v1/authenticate")
   fun signup(@RequestBody user: SignInDto): ResponseEntity<String>{
 
     val loggedUser: LoggedUserDto = authenticateUser.authenticate(user)

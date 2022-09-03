@@ -79,8 +79,6 @@ class SecurityConfig @Autowired constructor(
   fun passwordEncoder() = BCryptPasswordEncoder()
 
   @Bean
-  fun jwtUtils() = JwtUtils()
-
-  @Bean
   fun authJwtFilter(jwtUtils: JwtUtils, userDetailsService: UserDetailsService) = AuthJwtFilter(jwtUtils,userDetailsService)
+
 }

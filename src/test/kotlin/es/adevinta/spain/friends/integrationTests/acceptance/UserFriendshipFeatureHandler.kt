@@ -1,9 +1,9 @@
-package es.adevinta.spain.friends.infraestructure.acceptance
+package es.adevinta.spain.friends.integrationTests.acceptance
 
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infraestructure.IntegrationTest
+import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import kotlin.test.assertEquals
 import org.assertj.core.api.Assertions.contentOf
@@ -15,8 +15,8 @@ import org.springframework.http.HttpStatus.OK
 
 class UserFriendshipFeatureHandler: IntegrationTest() {
 
-  private val loggedInUser1 = User(UserName("user01"),PassWord("1234567899"))
-  private val user2 = User(UserName("user02"),PassWord("123456789"))
+  private val loggedInUser1 = User(UserName("user01"),"1234567899")
+  private val user2 = User(UserName("user02"), "123456789")
 
   @Value("classpath:json/friendshipReqJson.json")
   private lateinit var newFriendshipReqDto: Resource

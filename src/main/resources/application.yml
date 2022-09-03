@@ -25,5 +25,5 @@ database:
   username: "root"
   password: "backend"
 
-bookshelf.app.jwtSecret: xGVgsxuqBU3xuv9J
-bookshelf.app.expirationMs: 86400000
+app.jwtSecret: "xGVgsxuqBU3xuv9J"
+app.expirationMs: 86400000

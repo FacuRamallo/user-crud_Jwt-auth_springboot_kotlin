@@ -3,6 +3,7 @@ package es.adevinta.spain.friends.domain
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.String
 
 data class UserName( val value: String) {
   init {

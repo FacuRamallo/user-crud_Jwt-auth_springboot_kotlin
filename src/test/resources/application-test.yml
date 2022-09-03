@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+  security:
+    user:
+      password: "Qwer4321"

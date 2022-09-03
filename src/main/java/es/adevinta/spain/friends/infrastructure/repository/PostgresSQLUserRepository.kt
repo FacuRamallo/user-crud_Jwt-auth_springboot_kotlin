@@ -45,7 +45,7 @@ class PostgresSQLUserRepository(
 
     val addMapSqlParameterSource = MapSqlParameterSource()
     addMapSqlParameterSource.addValue("username", user.username.value)
-    addMapSqlParameterSource.addValue("password", user.password.value)
+    addMapSqlParameterSource.addValue("password", user.password)
     addMapSqlParameterSource.addValue("created_at", now())
     addMapSqlParameterSource.addValue("updated_at", now())
 
@@ -62,7 +62,7 @@ class PostgresSQLUserRepository(
     TODO("Not yet implemented")
   }
 
-  override fun getByUserName(username: String?): User? {
+  override fun getByUserName(username: kotlin.String?): User? {
     val query =  """
       SELECT username, password
       FROM users
@@ -84,7 +84,7 @@ class PostgresSQLUserRepository(
   private fun mapToUser() = RowMapper { rs: ResultSet, _: Int ->
     User(
       UserName(rs.getString("username")),
-      PassWord(rs.getString("password"))
+      rs.getString("password")
     )
   }
 

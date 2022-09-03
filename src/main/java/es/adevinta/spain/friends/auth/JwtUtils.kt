@@ -11,15 +11,20 @@ import java.security.Key
 import java.util.Date
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
+import org.springframework.stereotype.Component
 
-
+@Component
 class JwtUtils {
   private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-  @Value("\${bookshelf.app.jwtSecret}") private lateinit var jwtSecret : String
-  @Value("\${bookshelf.app.jwtSecret}") private lateinit var jwtExpirationMs : Number
+
+  //@Value("\${app.jwtSecret}")
+  private val jwtSecret: String = "c268fba52d6e456cbdb705ab7af5a14ab270610d953fbb32b24b3756e7315ca3f2b39fb3bd114ff6dfea79842a3fd5a5a40fe549badace2d517df5ab22aeba5a"
+
+  //@Value("\${app.expirationMs}")
+  private val jwtExpirationMs : Int = 86400000
+
 
   private var keyBytes : ByteArray = Decoders.BASE64.decode(jwtSecret)
   private var key : Key = Keys.hmacShaKeyFor(keyBytes)
@@ -30,7 +35,7 @@ class JwtUtils {
     return Jwts.builder()
       .setSubject(userPrincipal.username)
       .setIssuedAt(Date())
-      .setExpiration(Date(Date().time + jwtExpirationMs.toInt()))
+      .setExpiration(Date(Date().time + jwtExpirationMs))
       .signWith(key, SignatureAlgorithm.HS512)
       .compact()
   }

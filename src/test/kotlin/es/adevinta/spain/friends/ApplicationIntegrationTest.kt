@@ -1,8 +1,9 @@
 package es.adevinta.spain.friends
 
-import es.adevinta.spain.friends.infraestructure.acceptance.RegisterUserFeature
-import es.adevinta.spain.friends.infraestructure.database.DatabaseTestCase
-import es.adevinta.spain.friends.infraestructure.helper.DockerComposeHelper
+import es.adevinta.spain.friends.integrationTests.acceptance.AuthenticateUserFeature
+import es.adevinta.spain.friends.integrationTests.acceptance.RegisterUserFeature
+import es.adevinta.spain.friends.integrationTests.database.DatabaseTestCase
+import es.adevinta.spain.friends.integrationTests.helper.DockerComposeHelper
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container
@@ -27,5 +28,8 @@ class ApplicationIntegrationTest {
 
   @Nested
   inner class RegisterUserFeatureNested : RegisterUserFeature()
+  @Nested
+  inner class AuthenticateUserFeatureNested : AuthenticateUserFeature()
+
 
 }
