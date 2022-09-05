@@ -1,8 +1,9 @@
-package es.adevinta.spain.friends.auth
+package es.adevinta.spain.friends.infrastructure.auth
 
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
+import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl.Companion
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component

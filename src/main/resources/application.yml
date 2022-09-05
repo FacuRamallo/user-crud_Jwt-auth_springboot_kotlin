@@ -1,9 +1,6 @@
 spring:
   profiles:
     active: dev
-  security:
-    user:
-      password: "Qwer4321"
   datasource:
     url: "jdbc:postgresql://${database.host}:${database.port}/${database.name}"
     username: "${database.username}"

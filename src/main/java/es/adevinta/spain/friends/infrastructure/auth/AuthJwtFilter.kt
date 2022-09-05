@@ -1,14 +1,12 @@
-package es.adevinta.spain.friends.auth
+package es.adevinta.spain.friends.infrastructure.auth
 
 import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.jvm.Throws
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -46,10 +44,12 @@ class AuthJwtFilter(
   }
 
   private fun parseJwt(request: HttpServletRequest): String? {
-    val authHeader: String = request.getHeader("Authorization")
+    val authHeader: String? = request.getHeader("Authorization")
 
-    if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")){
-      return authHeader.substring(7)
+    if (authHeader != null) {
+      if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")){
+        return authHeader.substring(7)
+      }
     }
     return null
   }

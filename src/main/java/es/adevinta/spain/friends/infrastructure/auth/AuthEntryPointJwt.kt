@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.auth
+package es.adevinta.spain.friends.infrastructure.auth
 
 import java.io.IOException
 import javax.servlet.ServletException

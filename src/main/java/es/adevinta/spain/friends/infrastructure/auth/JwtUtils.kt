@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.auth
+package es.adevinta.spain.friends.infrastructure.auth
 
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts

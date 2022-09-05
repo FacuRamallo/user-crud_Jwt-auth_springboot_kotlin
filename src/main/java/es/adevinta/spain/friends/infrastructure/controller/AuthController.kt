@@ -2,6 +2,8 @@ package es.adevinta.spain.friends.infrastructure.controller
 
 import es.adevinta.spain.friends.application.auth.AuthenticateUser
 import es.adevinta.spain.friends.application.auth.RegisterUser
+import es.adevinta.spain.friends.application.auth.UserCommand
+import es.adevinta.spain.friends.domain.contracts.IUserAuthenticationService
 import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
@@ -12,6 +14,7 @@ import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_103
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_202
+import es.adevinta.spain.friends.infrastructure.auth.services.UserAuthenticationServiceImpl
 import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
 import org.springframework.http.ResponseEntity
@@ -27,14 +30,25 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
   @PostMapping("v1/authenticate")
   fun signup(@RequestBody user: SignInDto): ResponseEntity<String>{
 
-    val loggedUser: LoggedUserDto = authenticateUser.authenticate(user)
+    val userToAuthenticate = UserCommand(user.userName,user.password)
 
-    return OK_202.jwtResponse(loggedUser)
+    val authUserDetails = authenticateUser.authenticate(userToAuthenticate)
+
+    val loggedUserDto = LoggedUserDto(
+      authUserDetails.token,
+      "Bearer",
+      authUserDetails.username,
+      authUserDetails.roles
+    )
+
+    return OK_202.jwtResponse(loggedUserDto)
   }
 
   @PostMapping("v1/signup")
   fun getMessage(@RequestBody user: SignInDto): ResponseEntity<String> {
-    registerUser.create(user)
+    val userToRegister = UserCommand(user.userName,user.password)
+
+    registerUser.create(userToRegister)
 
     return OK_201.response()
   }

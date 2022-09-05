@@ -6,27 +6,26 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import es.adevinta.spain.friends.application.auth.RegisterUser
+import es.adevinta.spain.friends.application.auth.UserCommand
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
-import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import org.junit.jupiter.api.Test
-import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
-import es.adevinta.spain.friends.services.PasswordEncoderService
+import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-private val newUserWhithWrongUserName = SignInDto("usuario1+`´ç","abc1234")
-private val newUserWhithWrongPassword = SignInDto("usuario1","abc1234`+ç´¡''¡¡")
-private val signInDto = SignInDto("usuarioOK","abcd1234")
+private val newUserWhithWrongUserName = UserCommand("usuario1+`´ç","abc1234")
+private val newUserWhithWrongPassword = UserCommand("usuario1","abc1234`+ç´¡''¡¡")
+private val userCommand = UserCommand("usuarioOK","abcd1234")
 private val newUser = User(UserName("usuarioOK"),"abcd1234")
 class RegisterUserShould {
 
   private val userRepository = mock<UserRepository>()
-  private val passwordEncoderService = mock<PasswordEncoderService>()
+  private val passwordEncoderService = mock<PasswordEncoderServiceImpl>()
   private val registerUser = RegisterUser(userRepository,passwordEncoderService)
 
   @Test
@@ -60,7 +59,7 @@ class RegisterUserShould {
     given {userRepository.exist(newUser.username)} .willReturn(true)
 
     val exception = assertFailsWith<NameAlreadyExistException> {
-      registerUser.create(signInDto)
+      registerUser.create(userCommand)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -73,7 +72,7 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(signInDto)
+    registerUser.create(userCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 
@@ -89,7 +88,7 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(signInDto)
+    registerUser.create(userCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 

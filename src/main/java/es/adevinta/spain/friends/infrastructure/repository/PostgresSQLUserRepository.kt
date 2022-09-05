@@ -1,7 +1,6 @@
 package es.adevinta.spain.friends.infrastructure.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.UserRepository

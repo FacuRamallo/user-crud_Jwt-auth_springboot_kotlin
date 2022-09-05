@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.auth
+package es.adevinta.spain.friends.infrastructure.auth
 
 import es.adevinta.spain.friends.domain.User
 import java.util.stream.Collectors
@@ -52,11 +52,11 @@ class CustomUserDetailsImpl private constructor(
 
   override fun isEnabled(): Boolean = isEnabled
 
-  override fun equals(o: Any?): Boolean {
-    if (this === o) return true
-    if (o == null || javaClass != o.javaClass) return false
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other == null || javaClass != other.javaClass) return false
     val user: CustomUserDetailsImpl =
-      o as CustomUserDetailsImpl
+      other as CustomUserDetailsImpl
     return userName == user.userName
   }
 

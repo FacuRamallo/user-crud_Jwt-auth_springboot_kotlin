@@ -4,12 +4,11 @@ import es.adevinta.spain.friends.application.auth.RegisterUser
 import es.adevinta.spain.friends.application.FriendshipHandler
 import es.adevinta.spain.friends.application.GetUsers
 import es.adevinta.spain.friends.application.auth.AuthenticateUser
-import es.adevinta.spain.friends.auth.JwtUtils
+import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
+import es.adevinta.spain.friends.domain.contracts.IUserAuthenticationService
 import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.services.PasswordEncoderService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
+import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,14 +20,12 @@ class ApplicationConfiguration {
   @Bean
   fun registerUser(
     userRepository : UserRepository,
-    passwordEncoderService: PasswordEncoderService
+    passwordEncoderService: PasswordEncoderServiceImpl
   ) = RegisterUser(userRepository, passwordEncoderService)
 
   @Bean
-  fun authenticateUser(userRepository: UserRepository,
-                       authenticationManager: AuthenticationManager,
-                       jwtUtils: JwtUtils,
-  ) = AuthenticateUser(userRepository,authenticationManager,jwtUtils)
+  fun authenticateUser(userAuthenticationService: IUserAuthenticationService
+  ) = AuthenticateUser(userAuthenticationService)
 
   @Bean
   fun friendshipHandler(
@@ -39,5 +36,5 @@ class ApplicationConfiguration {
   fun getUser(userRepository : UserRepository) = GetUsers(userRepository)
 
   @Bean
-  fun passwordEncoderService(passwordEncoder: PasswordEncoder) = PasswordEncoderService(passwordEncoder)
+  fun passwordEncoderService(passwordEncoder: PasswordEncoder) = PasswordEncoderServiceImpl(passwordEncoder)
 }

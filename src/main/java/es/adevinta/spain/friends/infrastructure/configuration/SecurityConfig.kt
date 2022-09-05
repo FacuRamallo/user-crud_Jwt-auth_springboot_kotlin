@@ -1,10 +1,10 @@
 package es.adevinta.spain.friends.infrastructure.configuration
 
-import es.adevinta.spain.friends.auth.AuthEntryPointJwt
-import es.adevinta.spain.friends.auth.AuthJwtFilter
-import es.adevinta.spain.friends.auth.CustomUserDetailsServiceImpl
-import es.adevinta.spain.friends.auth.JwtUtils
 import es.adevinta.spain.friends.domain.contracts.UserRepository
+import es.adevinta.spain.friends.infrastructure.auth.AuthEntryPointJwt
+import es.adevinta.spain.friends.infrastructure.auth.AuthJwtFilter
+import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsServiceImpl
+import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
@@ -54,6 +55,8 @@ class SecurityConfig @Autowired constructor(
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
       .authorizeRequests().antMatchers(POST, "/v1/**").permitAll() // Our private endpoints
       .anyRequest().authenticated()
+
+    http.addFilterBefore(authJwtFilter(JwtUtils(), userDetailsService(userRepository)), UsernamePasswordAuthenticationFilter::class.java)
 
   }
 
