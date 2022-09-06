@@ -3,7 +3,6 @@ package es.adevinta.spain.friends.infrastructure.controller
 import es.adevinta.spain.friends.application.auth.AuthenticateUser
 import es.adevinta.spain.friends.application.auth.RegisterUser
 import es.adevinta.spain.friends.application.auth.UserCommand
-import es.adevinta.spain.friends.domain.contracts.IUserAuthenticationService
 import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
@@ -14,7 +13,6 @@ import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_103
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_202
-import es.adevinta.spain.friends.infrastructure.auth.services.UserAuthenticationServiceImpl
 import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
 import org.springframework.http.ResponseEntity

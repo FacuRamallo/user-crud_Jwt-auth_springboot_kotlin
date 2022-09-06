@@ -3,10 +3,10 @@ package es.adevinta.spain.friends.application.auth
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.IUserAuthenticationService
+import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 
 class AuthenticateUser(
-  private val userAuthenticationService: IUserAuthenticationService,
+  private val userAuthenticationService: UserAuthenticationService,
 ) {
 
   fun authenticate(userCommand: UserCommand): AuthUserCommand {

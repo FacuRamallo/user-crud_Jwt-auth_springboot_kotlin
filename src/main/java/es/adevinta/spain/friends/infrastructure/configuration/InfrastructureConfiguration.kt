@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PRO
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
-import es.adevinta.spain.friends.domain.contracts.IUserAuthenticationService
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import es.adevinta.spain.friends.infrastructure.auth.services.UserAuthenticationServiceImpl
