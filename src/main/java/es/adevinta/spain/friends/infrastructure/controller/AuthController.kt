@@ -13,7 +13,6 @@ import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_103
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_202
-import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -28,18 +27,11 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
   @PostMapping("v1/authenticate")
   fun signup(@RequestBody user: SignInDto): ResponseEntity<String>{
 
-    val userToAuthenticate = UserCommand(user.userName,user.password)
+    val command = UserCommand(user.userName,user.password)
 
-    val authUserDetails = authenticateUser.authenticate(userToAuthenticate)
+    val authUserDetails = authenticateUser.execute(command)
 
-    val loggedUserDto = LoggedUserDto(
-      authUserDetails.token,
-      "Bearer",
-      authUserDetails.username,
-      authUserDetails.roles
-    )
-
-    return OK_202.jwtResponse(loggedUserDto)
+    return OK_202.jwtResponse(authUserDetails)
   }
 
   @PostMapping("v1/signup")

@@ -1,8 +1,7 @@
 package es.adevinta.spain.friends.infrastructure.apiResponses
 
-import es.adevinta.spain.friends.infrastructure.controller.dtos.SignInDto
+import es.adevinta.spain.friends.application.auth.AuthUserDto
 import es.adevinta.spain.friends.domain.Friend
-import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
@@ -59,11 +58,11 @@ enum class ApiResponses(
     )
   }
 
-  fun jwtResponse(loggedUser: LoggedUserDto): ResponseEntity<String> {
+  fun jwtResponse(authenticatedUser: AuthUserDto): ResponseEntity<String> {
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = "{\"Message\":\"$message\",\"StatusCode\":${statusCode.value()},\"Code\":\"$code\",\"Username\":\"${loggedUser.username}\",\"roles\":\"${loggedUser.roles}\",\"token\":\"${loggedUser.token}\",\"tokenType\":\"${loggedUser.tokenType}\"}"
+    val responseBody = "{\"Message\":\"$message\",\"StatusCode\":${statusCode.value()},\"Code\":\"$code\",\"Username\":\"${authenticatedUser.username}\",\"roles\":\"${authenticatedUser.roles}\",\"token\":\"${authenticatedUser.token}\",\"tokenType\":\"${authenticatedUser.tokenType}\"}"
 
     return ResponseEntity(
       responseBody,

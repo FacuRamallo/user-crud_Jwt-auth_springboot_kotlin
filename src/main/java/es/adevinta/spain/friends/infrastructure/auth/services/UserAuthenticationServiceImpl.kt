@@ -1,10 +1,11 @@
 package es.adevinta.spain.friends.infrastructure.auth.services
 
-import es.adevinta.spain.friends.application.auth.AuthUserCommand
+import es.adevinta.spain.friends.application.auth.AuthUserDto
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import java.util.stream.Collectors
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -30,15 +31,16 @@ class UserAuthenticationServiceImpl(private val authenticationManager: Authentic
      return jwtUtils.generateJwt(authentication)
   }
 
-  override fun getAuthenticatedUserDetails() : AuthUserCommand {
+  override fun getAuthenticatedUserDetails() : AuthUserDto {
     val authUserDetails = getSecurityContextAuthentication().principal as CustomUserDetailsImpl
 
     val roles: List<String> = authUserDetails.authorities.stream()
         .map { item -> item.authority }
         .collect(Collectors.toList())
 
-    return AuthUserCommand(
+    return AuthUserDto(
       getAuthenticatedUserToken(),
+      "Bearer",
       authUserDetails.username,
       roles)
   }

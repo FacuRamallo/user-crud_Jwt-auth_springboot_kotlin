@@ -1,6 +1,6 @@
 package es.adevinta.spain.friends.domain.contracts
 
-import es.adevinta.spain.friends.application.auth.AuthUserCommand
+import es.adevinta.spain.friends.application.auth.AuthUserDto
 
 
 interface UserAuthenticationService {
@@ -9,5 +9,5 @@ interface UserAuthenticationService {
 
   fun getAuthenticatedUserToken() : String?
 
-  fun getAuthenticatedUserDetails() : AuthUserCommand
+  fun getAuthenticatedUserDetails() : AuthUserDto
 }

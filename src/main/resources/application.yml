@@ -22,5 +22,7 @@ database:
   username: "root"
   password: "backend"
 
-app.jwtSecret: "xGVgsxuqBU3xuv9J"
-app.expirationMs: 86400000
+jwt:
+  token-type: Bearer
+  jwt-secret: c268fba52d6e456cbdb705ab7af5a14ab270610d953fbb32b24b3756e7315ca3f2b39fb3bd114ff6dfea79842a3fd5a5a40fe549badace2d517df5ab22aeba5a
+  expiration-ms: 86400000

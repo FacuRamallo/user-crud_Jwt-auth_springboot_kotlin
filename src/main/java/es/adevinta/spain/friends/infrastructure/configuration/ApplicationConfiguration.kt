@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @Configuration
 class ApplicationConfiguration {
 
+
   @Bean
   fun registerUser(
     userRepository : UserRepository,

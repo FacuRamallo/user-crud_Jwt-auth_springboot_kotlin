@@ -97,8 +97,4 @@ class RegisterUserShould {
     assertEquals(newUser.roles.elementAt(0).name, userCaptorAdd.firstValue.roles.elementAt(0).name)
 
   }
-
-
-
-
 }

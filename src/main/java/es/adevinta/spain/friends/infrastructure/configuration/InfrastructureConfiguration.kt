@@ -30,5 +30,5 @@ class InfrastructureConfiguration {
   fun friendshipRepository() : FriendshipRepository = MapFriendshipRepository()
 
   @Bean
-  fun iUserAuthenticationService(authenticationManager: AuthenticationManager,jwtUtils: JwtUtils)  = UserAuthenticationServiceImpl(authenticationManager,  jwtUtils)
+  fun userAuthenticationService(authenticationManager: AuthenticationManager, jwtUtils: JwtUtils)  = UserAuthenticationServiceImpl(authenticationManager,  jwtUtils)
 }

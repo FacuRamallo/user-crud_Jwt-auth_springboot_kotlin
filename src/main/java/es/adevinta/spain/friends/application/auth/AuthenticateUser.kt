@@ -9,7 +9,7 @@ class AuthenticateUser(
   private val userAuthenticationService: UserAuthenticationService,
 ) {
 
-  fun authenticate(userCommand: UserCommand): AuthUserCommand {
+  fun execute(userCommand: UserCommand): AuthUserDto {
 
     val userToAuthenticate = User(UserName(userCommand.userName), PassWord(userCommand.passWord).value)
 

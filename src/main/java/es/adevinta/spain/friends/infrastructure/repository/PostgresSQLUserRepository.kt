@@ -61,7 +61,7 @@ class PostgresSQLUserRepository(
     TODO("Not yet implemented")
   }
 
-  override fun getByUserName(username: kotlin.String?): User? {
+  override fun getByUserName(username: String?): User? {
     val query =  """
       SELECT username, password
       FROM users

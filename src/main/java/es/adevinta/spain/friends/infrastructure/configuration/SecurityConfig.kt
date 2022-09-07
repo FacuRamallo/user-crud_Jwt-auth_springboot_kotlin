@@ -6,6 +6,7 @@ import es.adevinta.spain.friends.infrastructure.auth.AuthJwtFilter
 import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsServiceImpl
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod.POST
@@ -37,6 +38,11 @@ class SecurityConfig @Autowired constructor(
       this.unauthorizedHandler = unauthorizedHandler
   }
 
+  @Value("\${jwt.jwt-secret}")
+  private lateinit var secret : String
+  @Value("\${jwt.expiration-ms}")
+  private lateinit var expiration : Number
+
   @Bean
   fun userDetailsService(userRepository: UserRepository) = CustomUserDetailsServiceImpl(userRepository)
 
@@ -56,7 +62,7 @@ class SecurityConfig @Autowired constructor(
       .authorizeRequests().antMatchers(POST, "/v1/**").permitAll() // Our private endpoints
       .anyRequest().authenticated()
 
-    http.addFilterBefore(authJwtFilter(JwtUtils(), userDetailsService(userRepository)), UsernamePasswordAuthenticationFilter::class.java)
+    http.addFilterBefore(authJwtFilter(jwtUtils(), userDetailsService(userRepository)), UsernamePasswordAuthenticationFilter::class.java)
 
   }
 
@@ -80,6 +86,9 @@ class SecurityConfig @Autowired constructor(
 
   @Bean
   fun passwordEncoder() = BCryptPasswordEncoder()
+
+  @Bean
+  fun jwtUtils() = JwtUtils(secret,expiration)
 
   @Bean
   fun authJwtFilter(jwtUtils: JwtUtils, userDetailsService: UserDetailsService) = AuthJwtFilter(jwtUtils,userDetailsService)
