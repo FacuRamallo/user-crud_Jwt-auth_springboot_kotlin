@@ -1,6 +1,8 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
 import es.adevinta.spain.friends.domain.PassWord
+import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
+import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
@@ -10,6 +12,7 @@ import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
@@ -75,7 +78,7 @@ class RegisterUserFeature : IntegrationTest() {
   }
 
   @Test
-  fun `should create new user`(){
+  fun `should create new user with roles`(){
 
     given()
       .contentType("application/json")
@@ -90,6 +93,9 @@ class RegisterUserFeature : IntegrationTest() {
 
     assertTrue{ userRepository.exist(UserName("user001")) }
 
+    val createdUserRoles = userRepository.getByUserName("user001")?.roles
+
+    assertEquals(setOf(ROLE_USER,ROLE_ADMIN),createdUserRoles)
   }
 
 

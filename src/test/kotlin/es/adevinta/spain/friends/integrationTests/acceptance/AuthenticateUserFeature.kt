@@ -2,6 +2,9 @@ package es.adevinta.spain.friends.integrationTests.acceptance
 
 
 import es.adevinta.spain.friends.domain.PassWord
+import es.adevinta.spain.friends.domain.Role
+import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
+import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
@@ -26,7 +29,7 @@ class AuthenticateUserFeature : IntegrationTest() {
 
   @Test
   fun `should authenticate user when login`(){
-    createTestUser("user001", "123456789")
+    createTestUser("user001", "123456789",null)
 
     given()
       .contentType("application/json")
@@ -50,10 +53,31 @@ class AuthenticateUserFeature : IntegrationTest() {
 
   }
 
+  @Test
+  fun `should return list of roles with ADMIN role`(){
+    createTestUser("user001", "123456789", setOf(ROLE_USER,ROLE_ADMIN))
 
-  fun createTestUser(username: String, password: String) {
+    given()
+      .contentType("application/json")
+      .body(userDto.file)
+      .post("v1/authenticate")
+      .then()
+      .status(OK)
+      .contentType(JSON)
+      .body("roles",Matchers.hasItem("[ROLE_USER,ROLE_ADMIN]"))
+      .extract().response()
+  }
+
+
+
+  fun createTestUser(username: String, password: String, roles: Set<Role>?) {
     val encodedPassword = passwordEncoderService.encodePassword(PassWord(password))
-    val testUser = User(UserName(username), encodedPassword)
+    val testUser : User = if(roles.isNullOrEmpty()){
+      User(UserName(username), encodedPassword)
+    }else {
+      User(UserName(username), encodedPassword, roles)
+    }
+
     try {
       userRepository.add(testUser)
     }catch(e: Exception) {

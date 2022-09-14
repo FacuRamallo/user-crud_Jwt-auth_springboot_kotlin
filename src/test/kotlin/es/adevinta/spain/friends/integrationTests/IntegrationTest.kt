@@ -43,8 +43,8 @@ class IntegrationTest {
   @Autowired
   lateinit var userRepositoryForTest: UserRepositoryForTest
 
-  @Autowired
-  lateinit var friendshipRepository: FriendshipRepository
+
+
 
 
 

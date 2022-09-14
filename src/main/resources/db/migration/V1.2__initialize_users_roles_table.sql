@@ -1,13 +1,13 @@
 create table users_roles(
-    user_id INT not null,
+    username VARCHAR(36) not null,
     rolename VARCHAR(36) not null,
-    constraint users_roles_pk primary key (user_id, rolename)
+    constraint users_roles_pk primary key (username, rolename)
 );
 
 alter table users_roles
     add constraint users_roles_users_fk
-        foreign key (user_id)
-            references users(user_id) on delete cascade;
+        foreign key (username)
+            references users(username) on delete cascade;
 
 alter table users_roles
     add constraint users_roles_roles_fk

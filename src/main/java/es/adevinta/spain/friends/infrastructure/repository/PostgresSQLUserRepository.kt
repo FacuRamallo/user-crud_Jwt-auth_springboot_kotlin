@@ -15,9 +15,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 @Suppress("StringLiteralDuplication")
 class PostgresSQLUserRepository(
   private val jdbcTemplate: NamedParameterJdbcTemplate,
-  private val mapper: ObjectMapper
+  private val rolesMapper: RolesMapper
 ) : UserRepository {
-
   override fun exist(userName: UserName): Boolean {
     val query = """
       SELECT EXISTS(SELECT user_id FROM users
@@ -49,10 +48,11 @@ class PostgresSQLUserRepository(
     addMapSqlParameterSource.addValue("updated_at", now())
 
     try {
-        jdbcTemplate.update(sql, addMapSqlParameterSource)
+      jdbcTemplate.update(sql, addMapSqlParameterSource)
+      rolesMapper.saveRoles(user.username.value,user.roles)
     } catch (e: DataAccessException) {
       throw UserRepositoryException(
-        "Error in add method for user: ${user.username}", e
+        "Error in add method for user: ${user.username.value}", e
       )
     }
   }

@@ -7,8 +7,9 @@ import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import es.adevinta.spain.friends.infrastructure.auth.services.UserAuthenticationServiceImpl
-import es.adevinta.spain.friends.infrastructure.repository.MapFriendshipRepository
+import es.adevinta.spain.friends.infrastructure.repository.PostgresSQLRolesMapper
 import es.adevinta.spain.friends.infrastructure.repository.PostgresSQLUserRepository
+import es.adevinta.spain.friends.infrastructure.repository.RolesMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -23,11 +24,11 @@ class InfrastructureConfiguration {
   @Bean
   fun userRepository(
     jdbcTemplate: NamedParameterJdbcTemplate,
-    mapper: ObjectMapper
-  ) : UserRepository = PostgresSQLUserRepository(jdbcTemplate, mapper)
+    rolesMapper: RolesMapper
+  ) : UserRepository = PostgresSQLUserRepository(jdbcTemplate, rolesMapper)
 
   @Bean
-  fun friendshipRepository() : FriendshipRepository = MapFriendshipRepository()
+  fun rolesMapper( jdbcTemplate: NamedParameterJdbcTemplate): RolesMapper = PostgresSQLRolesMapper(jdbcTemplate)
 
   @Bean
   fun userAuthenticationService(authenticationManager: AuthenticationManager, jwtUtils: JwtUtils)  = UserAuthenticationServiceImpl(authenticationManager,  jwtUtils)

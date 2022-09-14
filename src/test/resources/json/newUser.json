@@ -1,4 +1,8 @@
 {
   "UserName" : "user001",
-  "Password" : "123456789"
+  "Password" : "123456789",
+  "Roles": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
 }
