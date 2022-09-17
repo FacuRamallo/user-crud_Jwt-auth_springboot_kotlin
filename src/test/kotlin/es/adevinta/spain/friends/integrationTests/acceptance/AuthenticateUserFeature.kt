@@ -12,6 +12,9 @@ import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderSer
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.arrayContainingInAnyOrder
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -64,8 +67,8 @@ class AuthenticateUserFeature : IntegrationTest() {
       .then()
       .status(OK)
       .contentType(JSON)
-      .body("roles",Matchers.hasItem("[ROLE_USER,ROLE_ADMIN]"))
-      .extract().response()
+      .body("roles", Matchers.containsString(listOf("ROLE_USER","ROLE_ADMIN").toString()))
+
   }
 
 
@@ -73,7 +76,7 @@ class AuthenticateUserFeature : IntegrationTest() {
   fun createTestUser(username: String, password: String, roles: Set<Role>?) {
     val encodedPassword = passwordEncoderService.encodePassword(PassWord(password))
     val testUser : User = if(roles.isNullOrEmpty()){
-      User(UserName(username), encodedPassword)
+      User(UserName(username), encodedPassword, emptySet())
     }else {
       User(UserName(username), encodedPassword, roles)
     }

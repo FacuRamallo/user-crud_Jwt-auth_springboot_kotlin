@@ -15,8 +15,8 @@ import org.springframework.http.HttpStatus.OK
 
 class UserFriendshipFeatureHandler: IntegrationTest() {
 
-  private val loggedInUser1 = User(UserName("user01"),"1234567899")
-  private val user2 = User(UserName("user02"), "123456789")
+  private val loggedInUser1 = User(UserName("user01"),"1234567899", emptySet())
+  private val user2 = User(UserName("user02"), "123456789", emptySet())
 
   @Value("classpath:json/friendshipReqJson.json")
   private lateinit var newFriendshipReqDto: Resource

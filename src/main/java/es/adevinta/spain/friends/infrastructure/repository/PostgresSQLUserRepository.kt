@@ -1,6 +1,5 @@
 package es.adevinta.spain.friends.infrastructure.repository
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.UserRepository
@@ -61,7 +60,7 @@ class PostgresSQLUserRepository(
     TODO("Not yet implemented")
   }
 
-  override fun getByUserName(username: String?): User? {
+  override fun getByUserName(username: String): User? {
     val query =  """
       SELECT username, password
       FROM users
@@ -72,6 +71,7 @@ class PostgresSQLUserRepository(
     findByMapSqlParameterSource.addValue("username", username)
 
     try {
+
       return jdbcTemplate.queryForObject(query, findByMapSqlParameterSource, mapToUser())
     } catch (e: DataAccessException) {
       throw UserRepositoryException(
@@ -83,8 +83,10 @@ class PostgresSQLUserRepository(
   private fun mapToUser() = RowMapper { rs: ResultSet, _: Int ->
     User(
       UserName(rs.getString("username")),
-      rs.getString("password")
+      rs.getString("password"),
+      rolesMapper.getRoles(rs.getString("username"))
     )
+
   }
 
 }

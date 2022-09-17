@@ -43,11 +43,6 @@ class IntegrationTest {
   @Autowired
   lateinit var userRepositoryForTest: UserRepositoryForTest
 
-
-
-
-
-
   companion object {
     val wireMockServer: WireMockServer = WireMockServer(
       options()

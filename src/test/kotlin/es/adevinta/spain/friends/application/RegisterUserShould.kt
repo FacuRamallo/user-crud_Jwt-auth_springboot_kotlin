@@ -7,6 +7,7 @@ import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import es.adevinta.spain.friends.application.auth.RegisterUser
 import es.adevinta.spain.friends.application.auth.UserCommand
+import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
 import es.adevinta.spain.friends.domain.User
@@ -18,10 +19,10 @@ import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderSer
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-private val newUserWhithWrongUserName = UserCommand("usuario1+`´ç","abc1234")
-private val newUserWhithWrongPassword = UserCommand("usuario1","abc1234`+ç´¡''¡¡")
-private val userCommand = UserCommand("usuarioOK","abcd1234")
-private val newUser = User(UserName("usuarioOK"),"abcd1234")
+private val newUserWhithWrongUserName = UserCommand("usuario1+`´ç", "abc1234", setOf("ROLE_USER"))
+private val newUserWhithWrongPassword = UserCommand("usuario1", "abc1234`+ç´¡''¡¡", setOf("ROLE_USER"))
+private val userCommand = UserCommand("usuarioOK", "abcd1234", setOf("ROLE_USER"))
+private val newUser = User(UserName("usuarioOK"),"abcd1234", setOf(ROLE_USER))
 class RegisterUserShould {
 
   private val userRepository = mock<UserRepository>()
@@ -94,7 +95,7 @@ class RegisterUserShould {
 
     verify(userRepository).add(userCaptorAdd.capture())
 
-    assertEquals(newUser.roles.elementAt(0).name, userCaptorAdd.firstValue.roles.elementAt(0).name)
+    assertEquals(newUser.roles?.let {  it.elementAt(0).name }, userCaptorAdd.firstValue.roles?.let{it.elementAt(0).name})
 
   }
 }

@@ -27,7 +27,7 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
   @PostMapping("v1/authenticate")
   fun signup(@RequestBody user: SignInDto): ResponseEntity<String>{
 
-    val command = UserCommand(user.userName,user.password)
+    val command = UserCommand(user.userName, user.password, user.roles)
 
     val authUserDetails = authenticateUser.execute(command)
 
@@ -36,7 +36,7 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
 
   @PostMapping("v1/signup")
   fun getMessage(@RequestBody user: SignInDto): ResponseEntity<String> {
-    val userToRegister = UserCommand(user.userName,user.password)
+    val userToRegister = UserCommand(user.userName,user.password, user.roles)
 
     registerUser.create(userToRegister)
 

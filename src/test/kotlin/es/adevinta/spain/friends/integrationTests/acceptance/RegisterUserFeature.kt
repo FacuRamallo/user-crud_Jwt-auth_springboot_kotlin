@@ -98,16 +98,13 @@ class RegisterUserFeature : IntegrationTest() {
     assertEquals(setOf(ROLE_USER,ROLE_ADMIN),createdUserRoles)
   }
 
-
   fun createTestUser(username: String, password: String) {
 
-    val testUser = User(UserName(username), password)
+    val testUser = User(UserName(username), password, emptySet())
     try {
       userRepository.add(testUser)
     }catch(e: Exception) {
       println(e.message + e.toString())
     }
   }
-
-
 }

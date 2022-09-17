@@ -15,7 +15,7 @@ open class CustomUserDetailsServiceImpl(private val userRepository: UserReposito
   @Override
   @Transactional
   override fun loadUserByUsername(username: String?): UserDetails {
-    val user: User = userRepository.getByUserName(username) ?: throw UserNameNotFoundException(username)
+    val user: User = username?.let { userRepository.getByUserName(it) } ?: throw UserNameNotFoundException(username)
 
     return CustomUserDetailsImpl.build(user)
   }

@@ -21,9 +21,9 @@ class CustomUserDetailsImpl private constructor(
 
     fun build(user: User): CustomUserDetailsImpl {
 
-      val authorities: List<GrantedAuthority> = user.roles.stream()
-        .map { role -> SimpleGrantedAuthority(role.getRoleName()) }
-        .collect(Collectors.toList())
+      val authorities: List<GrantedAuthority> = user.roles?.stream()
+        ?.map { role -> SimpleGrantedAuthority(role.roleName) }
+          ?.collect(Collectors.toList()) ?: emptyList()
 
       return CustomUserDetailsImpl(
         1L,
@@ -34,7 +34,7 @@ class CustomUserDetailsImpl private constructor(
         true,
         true,
         true
-      )
+        )
     }
   }
 
