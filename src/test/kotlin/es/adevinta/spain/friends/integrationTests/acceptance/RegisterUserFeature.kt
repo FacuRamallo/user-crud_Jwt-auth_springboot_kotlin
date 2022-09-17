@@ -26,6 +26,10 @@ class RegisterUserFeature : IntegrationTest() {
   @Value("classpath:json/newUser.json")
   private lateinit var newUserDto: Resource
 
+  @Value("classpath:json/newAdminUser.json")
+  private lateinit var newAdminUserDto: Resource
+
+
   @Value("classpath:json/newUserWithWrongName.json")
   private lateinit var newUserWrongNameDto: Resource
 
@@ -82,6 +86,24 @@ class RegisterUserFeature : IntegrationTest() {
 
     given()
       .contentType("application/json")
+      .body(newAdminUserDto.file)
+      .post("v1/signup")
+      .then()
+      .status(CREATED)
+      .contentType(JSON)
+      .body(equalTo(OK_201.response().body))
+
+    assertTrue{ userRepository.exist(UserName("user001")) }
+
+    val createdUserRoles = userRepository.getByUserName("user001")?.roles
+
+    assertEquals(setOf(ROLE_USER,ROLE_ADMIN),createdUserRoles)
+  }
+
+  @Test
+  fun `should create user with ROLE_USER when role is not informed at creation time`(){
+    given()
+      .contentType("application/json")
       .body(newUserDto.file)
       .post("v1/signup")
       .then()
@@ -89,13 +111,11 @@ class RegisterUserFeature : IntegrationTest() {
       .contentType(JSON)
       .body(equalTo(OK_201.response().body))
 
-
-
     assertTrue{ userRepository.exist(UserName("user001")) }
 
     val createdUserRoles = userRepository.getByUserName("user001")?.roles
 
-    assertEquals(setOf(ROLE_USER,ROLE_ADMIN),createdUserRoles)
+    assertEquals(setOf(ROLE_USER),createdUserRoles)
   }
 
   fun createTestUser(username: String, password: String) {

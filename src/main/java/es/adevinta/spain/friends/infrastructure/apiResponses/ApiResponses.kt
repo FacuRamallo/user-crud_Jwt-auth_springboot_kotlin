@@ -62,7 +62,16 @@ enum class ApiResponses(
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = "{\"Message\":\"$message\",\"StatusCode\":${statusCode.value()},\"Code\":\"$code\",\"Username\":\"${authenticatedUser.username}\",\"roles\":\"${authenticatedUser.roles}\",\"token\":\"${authenticatedUser.token}\",\"tokenType\":\"${authenticatedUser.tokenType}\"}"
+    val responseBody =
+      "{" +
+        "\"Message\":\"$message\"," +
+        "\"StatusCode\":${statusCode.value()}," +
+        "\"Code\":\"$code\"," +
+        "\"Username\":\"${authenticatedUser.username}\"," +
+        "\"roles\":\"${authenticatedUser.roles}\"," +
+        "\"token\":\"${authenticatedUser.token}\"," +
+        "\"tokenType\":\"${authenticatedUser.tokenType}\"" +
+      "}"
 
     return ResponseEntity(
       responseBody,

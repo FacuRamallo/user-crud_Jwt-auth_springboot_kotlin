@@ -10,9 +10,14 @@ class AuthenticateUser(
   private val userAuthenticationService: UserAuthenticationService,
 ) {
 
-  fun execute(userCommand: UserCommand): AuthUserDto {
+  fun execute(authenticateUserCommand: AuthenticateUserCommand): AuthUserDto {
 
-    val userToAuthenticate = User(UserName(userCommand.userName), PassWord(userCommand.passWord).value, mapToRoleSet(userCommand.roles))
+    val userToAuthenticate =
+      User(
+        UserName(authenticateUserCommand.userName),
+        PassWord(authenticateUserCommand.passWord).value,
+        emptySet()
+      )
 
     userAuthenticationService.authenticateUser(userToAuthenticate.username.value, userToAuthenticate.password)
 

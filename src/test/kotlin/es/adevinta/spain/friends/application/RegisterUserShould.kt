@@ -6,7 +6,8 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import es.adevinta.spain.friends.application.auth.RegisterUser
-import es.adevinta.spain.friends.application.auth.UserCommand
+import es.adevinta.spain.friends.application.auth.AuthenticateUserCommand
+import es.adevinta.spain.friends.application.auth.NewUserCommand
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
@@ -19,9 +20,9 @@ import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderSer
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-private val newUserWhithWrongUserName = UserCommand("usuario1+`´ç", "abc1234", setOf("ROLE_USER"))
-private val newUserWhithWrongPassword = UserCommand("usuario1", "abc1234`+ç´¡''¡¡", setOf("ROLE_USER"))
-private val userCommand = UserCommand("usuarioOK", "abcd1234", setOf("ROLE_USER"))
+private val newUserWhithWrongUserName = NewUserCommand("usuario1+`´ç", "abc1234", setOf("ROLE_USER"))
+private val newUserWhithWrongPassword = NewUserCommand("usuario1", "abc1234`+ç´¡''¡¡", setOf("ROLE_USER"))
+private val authenticateUserCommand = NewUserCommand("usuarioOK", "abcd1234", setOf("ROLE_USER"))
 private val newUser = User(UserName("usuarioOK"),"abcd1234", setOf(ROLE_USER))
 class RegisterUserShould {
 
@@ -60,7 +61,7 @@ class RegisterUserShould {
     given {userRepository.exist(newUser.username)} .willReturn(true)
 
     val exception = assertFailsWith<NameAlreadyExistException> {
-      registerUser.create(userCommand)
+      registerUser.create(authenticateUserCommand)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -73,7 +74,7 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(userCommand)
+    registerUser.create(authenticateUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 
@@ -89,7 +90,7 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(userCommand)
+    registerUser.create(authenticateUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 
