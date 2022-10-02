@@ -30,6 +30,9 @@ class RegisterUserFeature : IntegrationTest() {
   private lateinit var newAdminUserDto: Resource
 
 
+  @Value("classpath:json/existingUser.json")
+  private lateinit var existingUserDto: Resource
+
   @Value("classpath:json/newUserWithWrongName.json")
   private lateinit var newUserWrongNameDto: Resource
 
@@ -53,11 +56,10 @@ class RegisterUserFeature : IntegrationTest() {
 
   @Test
   fun `should fail when username already exist`(){
-    createTestUser("user001","123456789")
 
     given()
       .contentType("application/json")
-      .body(newUserDto.file)
+      .body(existingUserDto.file)
       .post("v1/signup")
       .then()
       .status(BAD_REQUEST)
@@ -93,9 +95,9 @@ class RegisterUserFeature : IntegrationTest() {
       .contentType(JSON)
       .body(equalTo(OK_201.response().body))
 
-    assertTrue{ userRepository.exist(UserName("user001")) }
+    assertTrue{ userRepository.exist(UserName("Admin")) }
 
-    val createdUserRoles = userRepository.getByUserName("user001")?.roles
+    val createdUserRoles = userRepository.getByUserName("Admin")?.roles
 
     assertEquals(setOf(ROLE_USER,ROLE_ADMIN),createdUserRoles)
   }
@@ -111,9 +113,9 @@ class RegisterUserFeature : IntegrationTest() {
       .contentType(JSON)
       .body(equalTo(OK_201.response().body))
 
-    assertTrue{ userRepository.exist(UserName("user001")) }
+    assertTrue{ userRepository.exist(UserName("user002")) }
 
-    val createdUserRoles = userRepository.getByUserName("user001")?.roles
+    val createdUserRoles = userRepository.getByUserName("user002")?.roles
 
     assertEquals(setOf(ROLE_USER),createdUserRoles)
   }

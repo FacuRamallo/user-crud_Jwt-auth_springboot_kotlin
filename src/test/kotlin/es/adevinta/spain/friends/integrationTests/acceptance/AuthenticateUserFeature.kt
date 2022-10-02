@@ -19,8 +19,8 @@ import org.springframework.security.test.context.support.WithUserDetails
 
 class AuthenticateUserFeature : IntegrationTest() {
 
-  @Value("classpath:json/newUser.json")
-  private lateinit var newUserDto: Resource
+  @Value("classpath:json/existingUser.json")
+  private lateinit var existingUserDto: Resource
 
 
   @Value("classpath:json/AdminUser.json")
@@ -36,7 +36,7 @@ class AuthenticateUserFeature : IntegrationTest() {
 
     given()
       .contentType("application/json")
-      .body(newUserDto.file)
+      .body(existingUserDto.file)
       .post("v1/authenticate")
       .then()
       .status(OK)
