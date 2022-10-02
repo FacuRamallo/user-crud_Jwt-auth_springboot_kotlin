@@ -71,7 +71,6 @@ class PostgresSQLUserRepository(
     findByMapSqlParameterSource.addValue("username", username)
 
     try {
-
       return jdbcTemplate.queryForObject(query, findByMapSqlParameterSource, mapToUser())
     } catch (e: DataAccessException) {
       throw UserRepositoryException(

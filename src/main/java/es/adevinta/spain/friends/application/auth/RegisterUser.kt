@@ -16,25 +16,25 @@ open class RegisterUser(
   private val passwordEncoder : PasswordEncoderService,
 ) {
 
-  open fun create(authenticateUserCommand: NewUserCommand) {
-    val newUser = createUserFromCommand(authenticateUserCommand)
+  open fun create(newUserCommand: NewUserCommand) {
+    val newUser = createUserFromCommand(newUserCommand)
     val userNameAlreadyExist = userRepository.exist(newUser.username);
     if(userNameAlreadyExist) throw NameAlreadyExistException(newUser.username.value)
     userRepository.add(newUser)
   }
 
-  private fun createUserFromCommand(authenticateUserCommand: NewUserCommand) : User {
-    val userPassWord : PassWord = PassWord(authenticateUserCommand.passWord)
+  private fun createUserFromCommand(newUserCommand: NewUserCommand) : User {
+    val userPassWord : PassWord = PassWord(newUserCommand.passWord)
     val userPasswordEncoded= passwordEncoder.encodePassword(userPassWord)
     val role = mutableSetOf<Role>()
-    authenticateUserCommand.roles?.forEach {
+    newUserCommand.roles?.forEach {
       when(it){
         "ROLE_USER" -> role.add(ROLE_USER)
         "ROLE_ADMIN" -> role.add(ROLE_ADMIN)
         else -> role.add(ROLE_USER)
       }
     }
-    return User(UserName(authenticateUserCommand.userName), userPasswordEncoded, role)
+    return User(UserName(newUserCommand.userName), userPasswordEncoded, role)
   }
 
 }

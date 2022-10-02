@@ -1,6 +1,7 @@
 package es.adevinta.spain.friends
 
 import es.adevinta.spain.friends.integrationTests.acceptance.AuthenticateUserFeature
+import es.adevinta.spain.friends.integrationTests.acceptance.FriendshipFeatureHandler
 import es.adevinta.spain.friends.integrationTests.acceptance.RegisterUserFeature
 import es.adevinta.spain.friends.integrationTests.database.DatabaseTestCase
 import es.adevinta.spain.friends.integrationTests.helper.DockerComposeHelper
@@ -25,11 +26,11 @@ class ApplicationIntegrationTest {
 
   @Nested
   inner class DatabaseTestCaseNested : DatabaseTestCase()
-
   @Nested
   inner class RegisterUserFeatureNested : RegisterUserFeature()
   @Nested
   inner class AuthenticateUserFeatureNested : AuthenticateUserFeature()
-
+  @Nested
+  inner class FriendshipHandlerFeatureNested : FriendshipFeatureHandler()
 
 }

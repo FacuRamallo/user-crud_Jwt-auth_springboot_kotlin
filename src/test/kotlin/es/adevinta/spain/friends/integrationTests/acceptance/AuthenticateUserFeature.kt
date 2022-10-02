@@ -3,45 +3,45 @@ package es.adevinta.spain.friends.integrationTests.acceptance
 
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
-import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.arrayContainingInAnyOrder
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.containsString
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
+import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.UNAUTHORIZED
+import org.springframework.security.test.context.support.WithUserDetails
 
 class AuthenticateUserFeature : IntegrationTest() {
 
   @Value("classpath:json/newUser.json")
-  private lateinit var userDto: Resource
+  private lateinit var newUserDto: Resource
 
-  @Autowired
-  lateinit var passwordEncoderService: PasswordEncoderServiceImpl
+
+  @Value("classpath:json/AdminUser.json")
+  private lateinit var adminUserDto: Resource
+
+
+  @Value("classpath:json/NotExistUser.json")
+  private lateinit var notExistUserDto: Resource
 
   @Test
   fun `should authenticate user when login`(){
-    createTestUser("user001", "123456789",null)
+    //createTestUser("user001", "123456789",null)
 
     given()
       .contentType("application/json")
-      .body(userDto.file)
+      .body(newUserDto.file)
       .post("v1/authenticate")
       .then()
       .status(OK)
       .contentType(JSON)
-      .body(Matchers.containsString("\"Message\":\"User authenticated\""))
+      .body(containsString("\"Message\":\"User authenticated\""))
   }
 
   @Test
@@ -49,7 +49,7 @@ class AuthenticateUserFeature : IntegrationTest() {
 
     given()
       .contentType("application/json")
-      .body(userDto.file)
+      .body(notExistUserDto.file)
       .post("v1/authenticate")
       .then()
       .status(UNAUTHORIZED)
@@ -58,33 +58,25 @@ class AuthenticateUserFeature : IntegrationTest() {
 
   @Test
   fun `should return list of roles with ADMIN role`(){
-    createTestUser("user001", "123456789", setOf(ROLE_USER,ROLE_ADMIN))
 
     given()
       .contentType("application/json")
-      .body(userDto.file)
+      .body(adminUserDto.file)
       .post("v1/authenticate")
       .then()
       .status(OK)
       .contentType(JSON)
-      .body("roles", Matchers.containsString(listOf("ROLE_USER","ROLE_ADMIN").toString()))
-
+      .body("roles", containsString(listOf("ROLE_USER","ROLE_ADMIN").toString()))
   }
 
-
-
-  fun createTestUser(username: String, password: String, roles: Set<Role>?) {
-    val encodedPassword = passwordEncoderService.encodePassword(PassWord(password))
-    val testUser : User = if(roles.isNullOrEmpty()){
-      User(UserName(username), encodedPassword, emptySet())
-    }else {
-      User(UserName(username), encodedPassword, roles)
-    }
-
-    try {
-      userRepository.add(testUser)
-    }catch(e: Exception) {
-      println(e.message + e.toString())
-    }
+  @Test
+  @WithUserDetails("Admin")
+  fun `should return the current user name`(){
+    given()
+      .post("v1/authenticatedUser")
+      .then()
+      .status(CREATED)
+      .contentType(JSON)
+      .body(containsString("\"CurrentUserName\":\"Admin\""))
   }
 }

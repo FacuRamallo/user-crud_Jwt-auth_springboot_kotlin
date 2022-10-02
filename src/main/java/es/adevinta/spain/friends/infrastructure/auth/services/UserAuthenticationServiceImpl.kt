@@ -5,7 +5,6 @@ import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
 import java.util.stream.Collectors
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -43,6 +42,11 @@ class UserAuthenticationServiceImpl(private val authenticationManager: Authentic
       "Bearer",
       authUserDetails.username,
       roles)
+  }
+
+  override fun getAuthenticatedUserName(): String {
+    val authUserDetails = getSecurityContextAuthentication().principal as CustomUserDetailsImpl
+    return authUserDetails.username
   }
 
 

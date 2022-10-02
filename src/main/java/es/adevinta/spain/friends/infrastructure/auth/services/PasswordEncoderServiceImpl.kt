@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 
 
-class PasswordEncoderServiceImpl(private val passwordEncoder: PasswordEncoder) :
+open class PasswordEncoderServiceImpl(private val passwordEncoder: PasswordEncoder) :
   PasswordEncoderService {
 
   override fun encodePassword(value: PassWord): String = passwordEncoder.encode(value.value)

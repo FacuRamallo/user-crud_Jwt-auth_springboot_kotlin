@@ -45,6 +45,14 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
     return OK_201.response()
   }
 
+  @PostMapping("v1/authenticatedUser")
+  fun signUp(): ResponseEntity<String> {
+
+    val currentUser = authenticateUser.getCurrentUser()
+
+    return OK_201.currentUserResponse(currentUser)
+  }
+
   @ExceptionHandler(value = [UserDetailsException::class])
   fun handleUserDetailsException(e: UserDetailsException): ResponseEntity<String> =
     when (e) {

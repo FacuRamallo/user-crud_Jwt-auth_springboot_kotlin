@@ -1,33 +1,33 @@
 package es.adevinta.spain.friends.application
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import es.adevinta.spain.friends.application.auth.RegisterUser
-import es.adevinta.spain.friends.application.auth.AuthenticateUserCommand
 import es.adevinta.spain.friends.application.auth.NewUserCommand
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
+import es.adevinta.spain.friends.domain.contracts.PasswordEncoderService
 import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import org.junit.jupiter.api.Test
-import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-private val newUserWhithWrongUserName = NewUserCommand("usuario1+`´ç", "abc1234", setOf("ROLE_USER"))
+private val newUserWhithWrongUserName = NewUserCommand("usuario1+`´ç", "abcd1234", setOf("ROLE_USER"))
 private val newUserWhithWrongPassword = NewUserCommand("usuario1", "abc1234`+ç´¡''¡¡", setOf("ROLE_USER"))
-private val authenticateUserCommand = NewUserCommand("usuarioOK", "abcd1234", setOf("ROLE_USER"))
-private val newUser = User(UserName("usuarioOK"),"abcd1234", setOf(ROLE_USER))
+private val newUserCommand = NewUserCommand("usuarioOK", "abcd12345", setOf("ROLE_USER"))
+private val newUser = User(UserName("usuarioOK"),"abce12345", setOf(ROLE_USER))
 class RegisterUserShould {
 
   private val userRepository = mock<UserRepository>()
-  private val passwordEncoderService = mock<PasswordEncoderServiceImpl>()
+  private val passwordEncoderService = mock<PasswordEncoderService>()
   private val registerUser = RegisterUser(userRepository,passwordEncoderService)
 
   @Test
@@ -59,9 +59,10 @@ class RegisterUserShould {
     val expectedMessage = NameAlreadyExistException(newUser.username.value).message
 
     given {userRepository.exist(newUser.username)} .willReturn(true)
+    given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPassword")
 
     val exception = assertFailsWith<NameAlreadyExistException> {
-      registerUser.create(authenticateUserCommand)
+      registerUser.create(newUserCommand)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -74,14 +75,16 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(authenticateUserCommand)
+    given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPasword")
+
+    registerUser.create(newUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 
     verify(userRepository).add(userCaptorAdd.capture())
 
     assertEquals(newUser.username,userCaptorAdd.firstValue.username)
-    assertEquals(newUser.password,userCaptorAdd.firstValue.password)
+    assertEquals("encodedPasword",userCaptorAdd.firstValue.password)
 
   }
 
@@ -90,7 +93,9 @@ class RegisterUserShould {
 
     given {userRepository.exist(newUser.username)} .willReturn(false)
 
-    registerUser.create(authenticateUserCommand)
+    given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPassword")
+
+    registerUser.create(newUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 

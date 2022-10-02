@@ -26,6 +26,11 @@ enum class ApiResponses(
     "Ok_202",
     OK
   ),
+  OK_203(
+    "Friendship request sent successfully",
+    "Ok_203",
+    OK
+  ),
   ERROR_100(
     "User name must contain from 5 to 10 alphanumerical characters",
     "Error_100",
@@ -72,6 +77,19 @@ enum class ApiResponses(
         "\"token\":\"${authenticatedUser.token}\"," +
         "\"tokenType\":\"${authenticatedUser.tokenType}\"" +
       "}"
+
+    return ResponseEntity(
+      responseBody,
+      responseHeaders,
+      statusCode
+    )
+  }
+
+  fun currentUserResponse(currentUserName: String): ResponseEntity<String> {
+    val responseHeaders = HttpHeaders()
+    responseHeaders.contentType = MediaType.APPLICATION_JSON
+
+    val responseBody =  "{\"CurrentUserName\":\"${currentUserName}\"}"
 
     return ResponseEntity(
       responseBody,

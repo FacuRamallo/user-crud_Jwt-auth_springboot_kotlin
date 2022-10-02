@@ -59,7 +59,7 @@ class SecurityConfig @Autowired constructor(
       .exceptionHandling()
       .authenticationEntryPoint(unauthorizedHandler).and()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-      .authorizeRequests().antMatchers(POST, "/v1/**").permitAll() // Our private endpoints
+      .authorizeRequests().antMatchers(POST, "/v1/authenticate", "/v1/signup").permitAll() // Our private endpoints
       .anyRequest().authenticated()
 
     http.addFilterBefore(authJwtFilter(jwtUtils(), userDetailsService(userRepository)), UsernamePasswordAuthenticationFilter::class.java)
