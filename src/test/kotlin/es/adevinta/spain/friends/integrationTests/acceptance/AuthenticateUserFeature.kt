@@ -32,7 +32,6 @@ class AuthenticateUserFeature : IntegrationTest() {
 
   @Test
   fun `should authenticate user when login`(){
-    //createTestUser("user001", "123456789",null)
 
     given()
       .contentType("application/json")

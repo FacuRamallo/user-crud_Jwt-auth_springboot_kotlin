@@ -2,6 +2,7 @@ package es.adevinta.spain.friends.infrastructure.apiResponses
 
 import es.adevinta.spain.friends.application.auth.AuthUserDto
 import es.adevinta.spain.friends.domain.Friend
+import java.lang.Exception
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
@@ -50,6 +51,11 @@ enum class ApiResponses(
     "An error occured while creating the new user, Please try again later.",
     "Error_102",
     INTERNAL_SERVER_ERROR
+  ),
+  ERROR_104(
+    "Friendship request error.",
+    "Error_104",
+    BAD_REQUEST
   );
 
   fun response(): ResponseEntity<String> {
@@ -90,6 +96,25 @@ enum class ApiResponses(
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
     val responseBody =  "{\"CurrentUserName\":\"${currentUserName}\"}"
+
+    return ResponseEntity(
+      responseBody,
+      responseHeaders,
+      statusCode
+    )
+  }
+
+  fun friendshipErrorResponse(exception: Exception): ResponseEntity<String> {
+    val responseHeaders = HttpHeaders()
+    responseHeaders.contentType = MediaType.APPLICATION_JSON
+
+    val responseBody =
+      "{" +
+            "\"Message\":\"$message\"," +
+            "\"StatusCode\":${statusCode.value()}," +
+            "\"Code\":\"$code\"," +
+            "\"Error\":\"${exception.message}\"" +
+            "}"
 
     return ResponseEntity(
       responseBody,

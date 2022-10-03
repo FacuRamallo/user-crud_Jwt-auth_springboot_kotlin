@@ -10,6 +10,7 @@ import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
+import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
 import es.adevinta.spain.friends.integrationTests.helper.UserRepositoryForTest
@@ -47,6 +48,9 @@ class IntegrationTest {
 
   @Autowired
   lateinit var userRepository: UserRepository
+
+  @Autowired
+  lateinit var friendshipRepository: FriendshipRepository
 
   @Autowired
   lateinit var userRepositoryForTest: UserRepositoryForTest

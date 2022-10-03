@@ -5,12 +5,14 @@ import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.willReturn
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.domain.contracts.UserRepository
+import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyRequestedException
 import es.adevinta.spain.friends.domain.exceptions.SelfFriendshipException
 import es.adevinta.spain.friends.domain.exceptions.TargetUserNameNotFoundException
 import kotlin.test.assertEquals
@@ -62,6 +64,18 @@ class FrienshipHandlerShould {
 
     assertFailsWith<SelfFriendshipException> {
       friendshipHandler.execute(FriendshipRequestCommand(requester.username.value))
+    }
+  }
+
+  @Test
+  fun `fail if user request friendship to a user that already has a pending request from him`(){
+    given{userRepository.exist(requester.username)}.willReturn(true)
+    given{userRepository.exist(target.username)}.willReturn(true)
+    given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
+    given{friendshipRepository.existBetween(requester.username, target.username)}.willReturn { true }
+
+    assertFailsWith<FriendshipAlreadyRequestedException> {
+      friendshipHandler.execute(FriendshipRequestCommand(target.username.value))
     }
   }
 }

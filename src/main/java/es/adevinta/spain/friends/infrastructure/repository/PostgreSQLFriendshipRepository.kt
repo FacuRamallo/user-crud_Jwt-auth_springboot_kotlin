@@ -11,11 +11,29 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
 class PostgreSQLFriendshipRepository(
-  val jdbcTemplate: NamedParameterJdbcTemplate
+  private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : FriendshipRepository {
 
   override fun existBetween(username1: UserName, username2: UserName): Boolean {
-    TODO("Not yet implemented")
+    val sql = """
+      SELECT EXISTS(SELECT * FROM friendships
+      WHERE requestFrom = :requestFrom
+      AND requestTo = :requestTo
+      AND (status = :pending OR status = :accepted))
+    """
+    val existFriendSqlParameterSource = MapSqlParameterSource()
+    existFriendSqlParameterSource.addValue("requestFrom", username1.value)
+    existFriendSqlParameterSource.addValue("requestTo", username2.value)
+    existFriendSqlParameterSource.addValue("pending", FriendshipStatus.PENDING.name)
+    existFriendSqlParameterSource.addValue("accepted", FriendshipStatus.ACCEPTED.name)
+
+    try {
+      return jdbcTemplate.queryForObject(sql, existFriendSqlParameterSource, Boolean::class.java)!!
+    } catch (e: DataAccessException) {
+      throw UserRepositoryException(
+        "Error in axistFriendship method for friendship between user ${username1.value} and ${username2.value}", e
+      )
+    }
   }
 
   override fun newFriendship(requester: UserName, target: UserName) {
@@ -36,7 +54,7 @@ class PostgreSQLFriendshipRepository(
       jdbcTemplate.update(sql, newFriendSqlParameterSource)
     } catch (e: DataAccessException) {
       throw UserRepositoryException(
-        "Error in add method for friendship between user ${requester.value} and ${target.value}", e
+        "Error in newFriendship method for friendship between user ${requester.value} and ${target.value}", e
       )
     }
   }
