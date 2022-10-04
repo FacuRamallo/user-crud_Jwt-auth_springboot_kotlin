@@ -1,10 +1,11 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
+import es.adevinta.spain.friends.infrastructure.controller.dtos.AcceptFriendshipReqDto
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
-import groovy.json.JsonOutput.toJson
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import org.assertj.core.api.Assertions.contentOf
 import org.hamcrest.Matchers.equalTo
@@ -17,8 +18,9 @@ import org.springframework.security.test.context.support.WithUserDetails
 
 class FriendshipFeatureHandler: IntegrationTest() {
 
+
   private val requester = User(UserName("user001"), "123654789",null)
-  private val user2 = User(UserName("user002"), "123456789", setOf(ROLE_USER))
+  private val target = User(UserName("user002"), "123456789", setOf(ROLE_USER))
 
   @Value("classpath:json/friendshipReqJson.json")
   private lateinit var newFriendshipReqDto: Resource
@@ -26,14 +28,13 @@ class FriendshipFeatureHandler: IntegrationTest() {
   @Value("classpath:apiResponses/Ok203response.json")
   private lateinit var ok203Response: Resource
 
-
   @Value("classpath:apiResponses/Error_104response.json")
   private lateinit var Error104Response: Resource
   @Test
   @WithUserDetails("user001")
   fun `users can request friendship to another users`(){
 
-    createTestUser(user2)
+    createTestUser(target)
 
     given()
       .contentType("application/json")
@@ -49,9 +50,9 @@ class FriendshipFeatureHandler: IntegrationTest() {
   @Test
   @WithUserDetails("user001")
   fun `A user cannot request friendship to a user that already has a pending or accepted request from him`(){
-    createTestUser(user2)
+    createTestUser(target)
 
-    createFriendship( requester, user2 )
+    createFriendship( requester, target )
 
     given()
       .contentType("application/json")
@@ -62,6 +63,27 @@ class FriendshipFeatureHandler: IntegrationTest() {
       .contentType("application/json")
       .body(equalTo(contentOf( Error104Response.file )))
 
+  }
+
+  @Test
+  @WithUserDetails("user001")
+  fun `A registered user can accepts requested friendship`(){
+    createTestUser(target)
+
+    createFriendship( target, requester )
+
+    val acceptFriendshipReqDto = AcceptFriendshipReqDto(
+      requestedFrom = "user002"
+    )
+
+    given()
+      .contentType("application/json")
+      .body(jacksonObjectMapper().writeValueAsString(acceptFriendshipReqDto))
+      .put("v1/friendship")
+      .then()
+      .status(OK)
+      .contentType("application/json")
+      .body(equalTo(contentOf( Error104Response.file )))
   }
 
   fun createTestUser(user : User) {

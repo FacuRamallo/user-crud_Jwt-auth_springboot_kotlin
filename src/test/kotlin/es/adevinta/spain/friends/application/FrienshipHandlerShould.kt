@@ -48,6 +48,12 @@ class FrienshipHandlerShould {
   }
 
   @Test
+  fun `allow a registered user to accept requested friendship`(){
+    given{userRepository.exist(target.username)}.willReturn(true)
+    given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
+  }
+
+  @Test
   fun `fail if target user does't exist`(){
     given{userRepository.exist(target.username)}.willReturn(false)
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
