@@ -4,8 +4,12 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
+import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistException
+import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_104
+import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_203
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
 import es.adevinta.spain.friends.infrastructure.controller.dtos.AcceptFriendshipReqDto
+import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipReqDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
@@ -23,29 +27,24 @@ class FriendshipFeatureHandler: IntegrationTest() {
 
   private val requester = User(UserName("user001"), "123654789",null)
   private val target = User(UserName("user002"), "123456789", setOf(ROLE_USER))
+  private val friendshipRequestDto = FriendshipReqDto("user002")
 
-  @Value("classpath:json/friendshipReqJson.json")
-  private lateinit var newFriendshipReqDto: Resource
-
-  @Value("classpath:apiResponses/Ok203response.json")
-  private lateinit var ok203Response: Resource
-
-  @Value("classpath:apiResponses/Error_104response.json")
-  private lateinit var Error104Response: Resource
   @Test
   @WithUserDetails("user001")
   fun `users can request friendship to another users`(){
 
     createTestUser(target)
 
+    val jsonInput = jacksonObjectMapper().writeValueAsString(friendshipRequestDto)
+
     given()
       .contentType("application/json")
-      .body(newFriendshipReqDto.file)
+      .body(jsonInput)
       .post("v1/friendship")
       .then()
       .status(OK)
       .contentType("application/json")
-      .body(equalTo(contentOf(ok203Response.file)))
+      .body(equalTo(OK_203.response().body))
 
   }
 
@@ -56,14 +55,16 @@ class FriendshipFeatureHandler: IntegrationTest() {
 
     createFriendship( requester, target )
 
+    val jsonInput = jacksonObjectMapper().writeValueAsString(friendshipRequestDto)
+
     given()
       .contentType("application/json")
-      .body(newFriendshipReqDto.file)
+      .body(jsonInput)
       .post("v1/friendship")
       .then()
       .status(BAD_REQUEST)
       .contentType("application/json")
-      .body(equalTo(contentOf( Error104Response.file )))
+      .body(equalTo(ERROR_104.friendshipErrorResponse(FriendshipAlreadyExistException(target.username)).body))
 
   }
 
@@ -79,9 +80,11 @@ class FriendshipFeatureHandler: IntegrationTest() {
       requestStatus = "ACCEPTED"
     )
 
+    val jsonInput = jacksonObjectMapper().writeValueAsString(acceptFriendshipReqDto)
+
     given()
       .contentType("application/json")
-      .body(jacksonObjectMapper().writeValueAsString(acceptFriendshipReqDto))
+      .body(jsonInput)
       .put("v1/friendship")
       .then()
       .status(OK)
