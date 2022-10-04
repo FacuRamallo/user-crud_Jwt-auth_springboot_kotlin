@@ -3,10 +3,8 @@ package es.adevinta.spain.friends.infrastructure.auth
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
-import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl.Companion
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 
@@ -14,8 +12,8 @@ open class CustomUserDetailsServiceImpl(private val userRepository: UserReposito
 
   @Override
   @Transactional
-  override fun loadUserByUsername(username: String?): UserDetails {
-    val user: User = username?.let { userRepository.getByUserName(it) } ?: throw UserNameNotFoundException(username)
+  override fun loadUserByUsername(username: String): UserDetails {
+    val user: User = username.let { userRepository.getByUserName(it) } ?: throw UserNameNotFoundException(username)
 
     return CustomUserDetailsImpl.build(user)
   }

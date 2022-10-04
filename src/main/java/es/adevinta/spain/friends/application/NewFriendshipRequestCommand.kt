@@ -1,5 +1,5 @@
 package es.adevinta.spain.friends.application
 
-class FriendshipRequestCommand(
+class NewFriendshipRequestCommand(
   val requestTo: String
 )

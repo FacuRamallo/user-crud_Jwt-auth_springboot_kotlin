@@ -17,8 +17,7 @@ class PostgreSQLFriendshipRepository(
   override fun existBetween(username1: UserName, username2: UserName): Boolean {
     val sql = """
       SELECT EXISTS(SELECT * FROM friendships
-      WHERE requestFrom = :requestFrom
-      AND requestTo = :requestTo
+      WHERE (requestfrom,requestto) = (:requestFrom,:requestTo) OR (requestfrom,requestto) = (:requestTo,:requestFrom)
       AND (status = :pending OR status = :accepted))
     """
     val existFriendSqlParameterSource = MapSqlParameterSource()
@@ -55,6 +54,27 @@ class PostgreSQLFriendshipRepository(
     } catch (e: DataAccessException) {
       throw UserRepositoryException(
         "Error in newFriendship method for friendship between user ${requester.value} and ${target.value}", e
+      )
+    }
+  }
+
+  override fun updateStatus(requester: UserName, target: UserName, status: FriendshipStatus) {
+    val sql = """
+      UPDATE friendships
+      SET status=:status
+      WHERE  (requestfrom,requestto) = (:requestFrom,:requestTo) OR (requestfrom,requestto) = (:requestTo,:requestFrom)
+    """
+
+    val updateStatusSqlParameterSource = MapSqlParameterSource()
+    updateStatusSqlParameterSource.addValue("requestFrom", requester.value)
+    updateStatusSqlParameterSource.addValue("requestTo", target.value)
+    updateStatusSqlParameterSource.addValue("status", FriendshipStatus.PENDING.name)
+
+    try {
+      jdbcTemplate.update(sql, updateStatusSqlParameterSource)
+    } catch (e: DataAccessException) {
+      throw UserRepositoryException(
+        "Error in updateStatus method for friendship between user ${requester.value} and ${target.value}", e
       )
     }
   }

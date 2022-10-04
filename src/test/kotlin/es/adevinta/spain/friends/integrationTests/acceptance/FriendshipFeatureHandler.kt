@@ -4,7 +4,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
+import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
 import es.adevinta.spain.friends.infrastructure.controller.dtos.AcceptFriendshipReqDto
+import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import org.assertj.core.api.Assertions.contentOf
@@ -72,8 +74,9 @@ class FriendshipFeatureHandler: IntegrationTest() {
 
     createFriendship( target, requester )
 
-    val acceptFriendshipReqDto = AcceptFriendshipReqDto(
-      requestedFrom = "user002"
+    val acceptFriendshipReqDto = FriendshipUpdateReqDto(
+      requestedFrom = "user002",
+      requestStatus = "ACCEPTED"
     )
 
     given()
@@ -83,7 +86,7 @@ class FriendshipFeatureHandler: IntegrationTest() {
       .then()
       .status(OK)
       .contentType("application/json")
-      .body(equalTo(contentOf( Error104Response.file )))
+      .body(equalTo(OK_204.response().body))
   }
 
   fun createTestUser(user : User) {

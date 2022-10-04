@@ -32,6 +32,11 @@ enum class ApiResponses(
     "Ok_203",
     OK
   ),
+  OK_204(
+    "Friendship updated successfully",
+    "Ok_204",
+    OK
+  ),
   ERROR_100(
     "User name must contain from 5 to 10 alphanumerical characters",
     "Error_100",

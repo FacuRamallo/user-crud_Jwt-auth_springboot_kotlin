@@ -6,15 +6,17 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.willReturn
+import es.adevinta.spain.friends.domain.FriendshipStatus
+import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyRequestedException
+import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistException
 import es.adevinta.spain.friends.domain.exceptions.SelfFriendshipException
-import es.adevinta.spain.friends.domain.exceptions.TargetUserNameNotFoundException
+import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
@@ -33,7 +35,7 @@ class FrienshipHandlerShould {
     given{userRepository.exist(target.username)}.willReturn(true)
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
 
-    friendshipHandler.execute(FriendshipRequestCommand(target.username.value))
+    friendshipHandler.execute(NewFriendshipRequestCommand(target.username.value))
 
     val friendshipRequesterArgCaptor = argumentCaptor<UserName>()
     val friendshipTargetArgCaptor = argumentCaptor<UserName>()
@@ -51,6 +53,23 @@ class FrienshipHandlerShould {
   fun `allow a registered user to accept requested friendship`(){
     given{userRepository.exist(target.username)}.willReturn(true)
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
+
+    friendshipHandler.execute(FriendshipUpdateCommand(target.username.value, "ACCEPTED"))
+
+    val friendshipRequesterArgCaptor = argumentCaptor<UserName>()
+    val friendshipTargetArgCaptor = argumentCaptor<UserName>()
+    val friendshipStatusArgCaptor = argumentCaptor<FriendshipStatus>()
+
+    verify(friendshipRepository, times(1)).updateStatus(
+      friendshipRequesterArgCaptor.capture(),
+      friendshipTargetArgCaptor.capture(),
+      friendshipStatusArgCaptor.capture()
+    )
+
+    assertEquals(requester.username,friendshipRequesterArgCaptor.firstValue)
+    assertEquals(target.username,friendshipTargetArgCaptor.firstValue)
+    assertEquals(ACCEPTED,friendshipStatusArgCaptor.firstValue)
+
   }
 
   @Test
@@ -58,8 +77,8 @@ class FrienshipHandlerShould {
     given{userRepository.exist(target.username)}.willReturn(false)
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
 
-    assertFailsWith<TargetUserNameNotFoundException> {
-      friendshipHandler.execute(FriendshipRequestCommand(target.username.value))
+    assertFailsWith<UserNameNotFoundException> {
+      friendshipHandler.execute(NewFriendshipRequestCommand(target.username.value))
     }
   }
 
@@ -69,7 +88,7 @@ class FrienshipHandlerShould {
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
 
     assertFailsWith<SelfFriendshipException> {
-      friendshipHandler.execute(FriendshipRequestCommand(requester.username.value))
+      friendshipHandler.execute(NewFriendshipRequestCommand(requester.username.value))
     }
   }
 
@@ -80,8 +99,8 @@ class FrienshipHandlerShould {
     given{userAuthenticationService.getAuthenticatedUserName()}.willReturn("currUser")
     given{friendshipRepository.existBetween(requester.username, target.username)}.willReturn { true }
 
-    assertFailsWith<FriendshipAlreadyRequestedException> {
-      friendshipHandler.execute(FriendshipRequestCommand(target.username.value))
+    assertFailsWith<FriendshipAlreadyExistException> {
+      friendshipHandler.execute(NewFriendshipRequestCommand(target.username.value))
     }
   }
 }
