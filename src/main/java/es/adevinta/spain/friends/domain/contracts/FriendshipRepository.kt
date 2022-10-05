@@ -2,6 +2,7 @@ package es.adevinta.spain.friends.domain.contracts
 
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.Friend
+import es.adevinta.spain.friends.domain.Friendship
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.User
 
@@ -13,4 +14,6 @@ interface FriendshipRepository {
 
   fun getFriends(userName: UserName) : List<User?>
   fun updateStatus(requester: UserName, target: UserName , status: FriendshipStatus)
+
+  fun getFriendship( requester : UserName , target : UserName ) : Friendship?
 }

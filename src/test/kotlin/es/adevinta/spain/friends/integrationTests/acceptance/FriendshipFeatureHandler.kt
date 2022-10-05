@@ -1,6 +1,10 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import es.adevinta.spain.friends.domain.FriendshipStatus
+import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
+import es.adevinta.spain.friends.domain.FriendshipStatus.CANCELED
+import es.adevinta.spain.friends.domain.FriendshipStatus.PENDING
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
@@ -13,6 +17,8 @@ import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipReqDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.assertj.core.api.Assertions.contentOf
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
@@ -46,6 +52,11 @@ class FriendshipFeatureHandler: IntegrationTest() {
       .contentType("application/json")
       .body(equalTo(OK_203.response().body))
 
+    assertTrue(friendshipRepository.existBetween(requester.username,target.username))
+
+    val updatedFriendship = friendshipRepository.getFriendship(target.username,requester.username)
+
+    assertEquals(PENDING.name,updatedFriendship?.let { it.status.name })
   }
 
   @Test
@@ -65,6 +76,7 @@ class FriendshipFeatureHandler: IntegrationTest() {
       .status(BAD_REQUEST)
       .contentType("application/json")
       .body(equalTo(ERROR_104.friendshipErrorResponse(FriendshipAlreadyExistException(target.username)).body))
+
 
   }
 
@@ -90,6 +102,43 @@ class FriendshipFeatureHandler: IntegrationTest() {
       .status(OK)
       .contentType("application/json")
       .body(equalTo(OK_204.response().body))
+
+    val updatedFriendship = friendshipRepository.getFriendship(target.username,requester.username)
+
+    assertEquals(ACCEPTED.name,updatedFriendship?.let { it.status.name })
+
+  }
+
+
+  @Test
+  @WithUserDetails("user001")
+  fun `a registered user can decline a requested friendship`() {
+    createTestUser(target)
+
+    createFriendship( target, requester )
+
+    assertTrue(friendshipRepository.existBetween(target.username,requester.username))
+
+    val declineFriendshipReqDto = FriendshipUpdateReqDto(
+      requestedFrom = "user002",
+      requestStatus = "CANCELED"
+    )
+
+    val jsonInput = jacksonObjectMapper().writeValueAsString(declineFriendshipReqDto)
+
+    given()
+      .contentType("application/json")
+      .body(jsonInput)
+      .put("v1/friendship")
+      .then()
+      .status(OK)
+      .contentType("application/json")
+      .body(equalTo(OK_204.response().body))
+
+    val updatedFriendship = friendshipRepository.getFriendship(target.username,requester.username)
+
+    assertEquals(CANCELED.name,updatedFriendship?.let { it.status.name })
+
   }
 
   fun createTestUser(user : User) {
