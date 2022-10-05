@@ -1,6 +1,7 @@
 package es.adevinta.spain.friends.infrastructure.apiResponses
 
-import es.adevinta.spain.friends.application.auth.AuthUserDto
+import es.adevinta.spain.friends.application.FriendDto
+import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
 import es.adevinta.spain.friends.domain.Friend
 import java.lang.Exception
 import org.springframework.http.HttpHeaders
@@ -132,11 +133,11 @@ enum class ApiResponses(
       statusCode
     )
   }
-  fun friendsListResponse(friends: List<Friend>?): ResponseEntity<String> {
+  fun friendsListResponse(friends: List<FriendDto>?): ResponseEntity<String> {
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = friends?.map { "{\"Username\":\"${it.friendName}\",\"IsAccepted\":${it.status}"}
+    val responseBody = friends?.map { "{\"Username\":\"${it.friendName}\"}"}
 
     return ResponseEntity(
       "$responseBody",

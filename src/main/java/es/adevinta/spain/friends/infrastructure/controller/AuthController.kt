@@ -2,8 +2,8 @@ package es.adevinta.spain.friends.infrastructure.controller
 
 import es.adevinta.spain.friends.application.auth.AuthenticateUser
 import es.adevinta.spain.friends.application.auth.RegisterUser
-import es.adevinta.spain.friends.application.auth.AuthenticateUserCommand
-import es.adevinta.spain.friends.application.auth.NewUserCommand
+import es.adevinta.spain.friends.application.auth.commands.AuthenticateUserCommand
+import es.adevinta.spain.friends.application.auth.commands.NewUserCommand
 import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
 import es.adevinta.spain.friends.domain.exceptions.InvalidUsernameException
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException

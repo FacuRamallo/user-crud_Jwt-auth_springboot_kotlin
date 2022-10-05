@@ -1,7 +1,7 @@
 package es.adevinta.spain.friends.infrastructure.controller
 
-import es.adevinta.spain.friends.application.FriendshipUpdateCommand
-import es.adevinta.spain.friends.application.NewFriendshipRequestCommand
+import es.adevinta.spain.friends.application.commands.FriendshipUpdateCommand
+import es.adevinta.spain.friends.application.commands.NewFriendshipRequestCommand
 import es.adevinta.spain.friends.application.FrienshipHandler
 import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistException
 import es.adevinta.spain.friends.domain.exceptions.FriendshipException

@@ -1,5 +1,6 @@
 package es.adevinta.spain.friends.application.auth
 
+import es.adevinta.spain.friends.application.auth.commands.NewUserCommand
 import es.adevinta.spain.friends.domain.PassWord
 import es.adevinta.spain.friends.domain.Role
 import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN

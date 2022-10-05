@@ -1,5 +1,6 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
+import es.adevinta.spain.friends.application.FriendDto
 import es.adevinta.spain.friends.domain.Friend
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
@@ -38,9 +39,9 @@ class ListFriendsFeature : IntegrationTest() {
     updateFriendship(currUser.username,user005.username,ACCEPTED)
 
     val expectedFriendsList = listOf(
-      Friend(user003.username,ACCEPTED),
-      Friend(user004.username,ACCEPTED),
-      Friend(user005.username,ACCEPTED)
+      FriendDto(user003.username.value),
+      FriendDto(user004.username.value),
+      FriendDto(user005.username.value)
     )
 
 
@@ -54,7 +55,6 @@ class ListFriendsFeature : IntegrationTest() {
   }
 
   fun createTestUser(user : User) {
-
     try {
       userRepository.add(user)
     }catch(e: Exception) {

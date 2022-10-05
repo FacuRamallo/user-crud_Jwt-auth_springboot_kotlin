@@ -7,6 +7,8 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.willReturn
+import es.adevinta.spain.friends.application.commands.FriendshipUpdateCommand
+import es.adevinta.spain.friends.application.commands.NewFriendshipRequestCommand
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
 import es.adevinta.spain.friends.domain.FriendshipStatus.CANCELED

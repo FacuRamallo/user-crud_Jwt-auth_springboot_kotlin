@@ -1,5 +1,7 @@
 package es.adevinta.spain.friends.application
 
+import es.adevinta.spain.friends.application.commands.FriendshipUpdateCommand
+import es.adevinta.spain.friends.application.commands.NewFriendshipRequestCommand
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository

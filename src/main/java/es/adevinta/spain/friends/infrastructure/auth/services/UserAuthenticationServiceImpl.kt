@@ -1,6 +1,6 @@
 package es.adevinta.spain.friends.infrastructure.auth.services
 
-import es.adevinta.spain.friends.application.auth.AuthUserDto
+import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils

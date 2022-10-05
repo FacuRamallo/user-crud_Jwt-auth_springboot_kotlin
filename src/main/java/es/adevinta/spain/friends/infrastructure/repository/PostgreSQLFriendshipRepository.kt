@@ -1,7 +1,10 @@
 package es.adevinta.spain.friends.infrastructure.repository
 
+import es.adevinta.spain.friends.domain.Friend
 import es.adevinta.spain.friends.domain.Friendship
 import es.adevinta.spain.friends.domain.FriendshipStatus
+import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
+import es.adevinta.spain.friends.domain.Role
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
@@ -102,8 +105,22 @@ class PostgreSQLFriendshipRepository(
 
   }
 
-  override fun getFriends(userName: UserName): List<User?> {
-    TODO("Not yet implemented")
+  override fun getFriends(userName: UserName): List<Friend>? {
+    val sql = """
+      SELECT * FROM friendships
+      WHERE (requestFrom = :userName OR requestTo =:userName) AND status =:accepted
+    """
+    val getFriendsSqlParameterSource = MapSqlParameterSource()
+    getFriendsSqlParameterSource.addValue("userName", userName.value)
+    getFriendsSqlParameterSource.addValue("accepted", ACCEPTED.name)
+
+    try {
+      return jdbcTemplate.query(sql, getFriendsSqlParameterSource, mapToFriend(userName)).toList()
+    } catch (e: DataAccessException) {
+      throw UserRepositoryException(
+        "Error in getFriends method for user ${userName.value}. ", e
+      )
+    }
   }
 
   private fun mapToFriendship() = RowMapper { rs: ResultSet, _: Int ->
@@ -118,4 +135,16 @@ class PostgreSQLFriendshipRepository(
       endedBy
       )
   }
+
+  private fun mapToFriend(userName: UserName) = RowMapper { rs: ResultSet, _: Int ->
+    var friendName = rs.getString("requestFrom")
+    if (userName.value == friendName) { friendName = rs.getString("requestTo")}
+
+    Friend(
+      UserName(friendName),
+      FriendshipStatus.valueOf(rs.getString("status"))
+    )
+  }
+
+
 }

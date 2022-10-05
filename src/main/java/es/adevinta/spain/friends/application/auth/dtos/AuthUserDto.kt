@@ -1,4 +1,4 @@
-package es.adevinta.spain.friends.application.auth
+package es.adevinta.spain.friends.application.auth.dtos
 
 data class AuthUserDto(
   val token: String,

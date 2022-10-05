@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import es.adevinta.spain.friends.application.auth.RegisterUser
-import es.adevinta.spain.friends.application.auth.NewUserCommand
+import es.adevinta.spain.friends.application.auth.commands.NewUserCommand
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.contracts.UserRepository
 import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException

@@ -1,6 +1,6 @@
 package es.adevinta.spain.friends.domain.contracts
 
-import es.adevinta.spain.friends.application.auth.AuthUserDto
+import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
 
 
 interface UserAuthenticationService {
