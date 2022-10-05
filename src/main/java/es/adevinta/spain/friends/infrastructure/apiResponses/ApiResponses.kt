@@ -37,6 +37,11 @@ enum class ApiResponses(
     "Ok_204",
     OK
   ),
+  OK_205(
+    "Friends list:",
+    "Ok_204",
+    OK
+  ),
   ERROR_100(
     "User name must contain from 5 to 10 alphanumerical characters",
     "Error_100",
@@ -127,11 +132,11 @@ enum class ApiResponses(
       statusCode
     )
   }
-  fun friendsResponse(friends: List<Friend?>): ResponseEntity<String> {
+  fun friendsListResponse(friends: List<Friend>?): ResponseEntity<String> {
     val responseHeaders = HttpHeaders()
     responseHeaders.contentType = MediaType.APPLICATION_JSON
 
-    val responseBody = friends.map { "{\"Username\":\"${it?.friendName}\",\"IsAccepted\":${it?.accepted}"}
+    val responseBody = friends?.map { "{\"Username\":\"${it.friendName}\",\"IsAccepted\":${it.status}"}
 
     return ResponseEntity(
       "$responseBody",

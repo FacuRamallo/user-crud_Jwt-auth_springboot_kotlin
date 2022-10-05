@@ -1,7 +1,6 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
 import es.adevinta.spain.friends.domain.FriendshipStatus.CANCELED
 import es.adevinta.spain.friends.domain.FriendshipStatus.PENDING
@@ -12,23 +11,19 @@ import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistExcepti
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_104
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_203
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
-import es.adevinta.spain.friends.infrastructure.controller.dtos.AcceptFriendshipReqDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipReqDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import org.assertj.core.api.Assertions.contentOf
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.OK
 import org.springframework.security.test.context.support.WithUserDetails
 
-class FriendshipFeatureHandler: IntegrationTest() {
+class FriendshipHandlerFeature: IntegrationTest() {
 
 
   private val requester = User(UserName("user001"), "123654789",null)

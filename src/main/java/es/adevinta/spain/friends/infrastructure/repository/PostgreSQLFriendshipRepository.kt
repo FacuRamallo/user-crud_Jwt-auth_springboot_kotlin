@@ -117,7 +117,5 @@ class PostgreSQLFriendshipRepository(
       FriendshipStatus.valueOf(rs.getString("status")),
       endedBy
       )
-
-
   }
 }
