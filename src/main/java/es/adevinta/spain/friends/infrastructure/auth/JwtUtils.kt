@@ -13,7 +13,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 
-class JwtUtils(private val jwtSecret: String, private val jwtExpirationMs: Number) {
+class JwtUtils(jwtSecret: String, private val jwtExpirationMs: Number) {
   private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
 

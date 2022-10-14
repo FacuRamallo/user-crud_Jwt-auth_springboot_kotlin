@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.util.StringUtils
+import org.springframework.util.StringUtils.hasText
 import org.springframework.web.filter.OncePerRequestFilter
 
 class AuthJwtFilter(
@@ -30,9 +31,8 @@ class AuthJwtFilter(
         val userName: String = jwtUtils.getUserNameFromJwt(jwt)
 
         val userDetails: UserDetails = userDetailsService.loadUserByUsername(userName)
-        val authentication: UsernamePasswordAuthenticationToken =
-          UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
-        authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
+        val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+          .apply { details = WebAuthenticationDetailsSource().buildDetails(request) }
 
         SecurityContextHolder.getContext().authentication = authentication
       }
@@ -46,9 +46,9 @@ class AuthJwtFilter(
   private fun parseJwt(request: HttpServletRequest): String? {
     val authHeader: String? = request.getHeader("Authorization")
 
-    if (authHeader != null) {
-      if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")){
-        return authHeader.substring(7)
+    authHeader?.apply {
+      if(hasText(this) && startsWith("Bearer ")){
+        return this.substring(7)
       }
     }
     return null

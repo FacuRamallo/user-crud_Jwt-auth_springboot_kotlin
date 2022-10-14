@@ -28,11 +28,10 @@ open class RegisterUser(
     val userPassWord : PassWord = PassWord(newUserCommand.passWord)
     val userPasswordEncoded= passwordEncoder.encodePassword(userPassWord)
     val role = mutableSetOf<Role>()
-    newUserCommand.roles?.forEach {
-      when(it){
+    newUserCommand.roles.apply { if (isNullOrEmpty()) role.add(ROLE_USER) }?.forEach {
+      when (it) {
         "ROLE_USER" -> role.add(ROLE_USER)
         "ROLE_ADMIN" -> role.add(ROLE_ADMIN)
-        else -> role.add(ROLE_USER)
       }
     }
     return User(UserName(newUserCommand.userName), userPasswordEncoded, role)

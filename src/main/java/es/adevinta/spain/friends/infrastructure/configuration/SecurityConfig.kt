@@ -29,7 +29,7 @@ import kotlin.Exception as JavaLangException
 class SecurityConfig @Autowired constructor(
   userRepository: UserRepository,
   unauthorizedHandler : AuthEntryPointJwt,
-      ): WebSecurityConfigurerAdapter() {
+): WebSecurityConfigurerAdapter() {
   private val userRepository: UserRepository
   private val unauthorizedHandler: AuthEntryPointJwt
 
@@ -48,7 +48,9 @@ class SecurityConfig @Autowired constructor(
 
   @Throws(Exception::class)
   override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
-    authenticationManagerBuilder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder())
+    authenticationManagerBuilder
+      .userDetailsService(userDetailsService(userRepository))
+      .passwordEncoder(passwordEncoder())
   }
 
   @Override
@@ -58,11 +60,16 @@ class SecurityConfig @Autowired constructor(
     http
       .exceptionHandling()
       .authenticationEntryPoint(unauthorizedHandler).and()
-      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-      .authorizeRequests().antMatchers(POST, "/v1/authenticate", "/v1/signup").permitAll() // Our private endpoints
+      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .antMatchers(POST, "/v1/authenticate", "/v1/signup").permitAll() // Our private endpoints
       .anyRequest().authenticated()
 
-    http.addFilterBefore(authJwtFilter(jwtUtils(), userDetailsService(userRepository)), UsernamePasswordAuthenticationFilter::class.java)
+    http.addFilterBefore(
+      authJwtFilter(jwtUtils(), userDetailsService(userRepository)),
+      UsernamePasswordAuthenticationFilter::class.java
+    )
 
   }
 

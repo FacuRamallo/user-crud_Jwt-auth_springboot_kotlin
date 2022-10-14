@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @Configuration
 class ApplicationConfiguration {
 
-
   @Bean
   fun registerUser(
     userRepository : UserRepository,
@@ -27,8 +26,8 @@ class ApplicationConfiguration {
 
   @Bean
   fun getFriendsList(
-    friendshipRepository : FriendshipRepository
-    ,userAuthenticationService: UserAuthenticationService
+    friendshipRepository : FriendshipRepository,
+    userAuthenticationService: UserAuthenticationService
   ) = GetFriendsList(friendshipRepository,userAuthenticationService)
 
   @Bean

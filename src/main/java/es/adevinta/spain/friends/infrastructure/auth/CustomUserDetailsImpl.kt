@@ -21,9 +21,7 @@ class CustomUserDetailsImpl private constructor(
 
     fun build(user: User): CustomUserDetailsImpl {
 
-      val authorities: List<GrantedAuthority> = user.roles?.stream()
-        ?.map { role -> SimpleGrantedAuthority(role.roleName) }
-          ?.collect(Collectors.toList()) ?: emptyList()
+      val authorities: List<GrantedAuthority> = user.roles?.map { role -> SimpleGrantedAuthority(role.roleName) } ?: emptyList()
 
       return CustomUserDetailsImpl(
         1L,
@@ -55,8 +53,7 @@ class CustomUserDetailsImpl private constructor(
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (other == null || javaClass != other.javaClass) return false
-    val user: CustomUserDetailsImpl =
-      other as CustomUserDetailsImpl
+    val user: CustomUserDetailsImpl = other as CustomUserDetailsImpl
     return userName == user.userName
   }
 

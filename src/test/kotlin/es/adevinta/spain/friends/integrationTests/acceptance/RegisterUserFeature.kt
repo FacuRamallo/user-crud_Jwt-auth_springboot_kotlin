@@ -102,7 +102,7 @@ class RegisterUserFeature : IntegrationTest() {
   }
 
   @Test
-  fun `should create user with ROLE_USER when role is not informed at creation time`(){
+  fun `should create user with ROLE_USER by default`(){
     given()
       .contentType("application/json")
       .body(newUserDto.file)

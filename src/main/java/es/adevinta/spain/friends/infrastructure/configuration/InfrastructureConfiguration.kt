@@ -41,7 +41,7 @@ class InfrastructureConfiguration {
       = UserAuthenticationServiceImpl(authenticationManager,  jwtUtils)
 
   @Bean
-  fun frindshipHandler(
+  fun friendshipHandler(
     userRepository: UserRepository,
     friendshipRepository: FriendshipRepository,
     userAuthenticationService: UserAuthenticationService
@@ -49,5 +49,5 @@ class InfrastructureConfiguration {
       userRepository,
       friendshipRepository,
       userAuthenticationService
-    )
+  )
 }

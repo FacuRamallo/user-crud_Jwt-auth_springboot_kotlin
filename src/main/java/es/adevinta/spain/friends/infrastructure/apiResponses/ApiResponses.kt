@@ -120,11 +120,11 @@ enum class ApiResponses(
 
     val responseBody =
       "{" +
-            "\"Message\":\"$message\"," +
-            "\"StatusCode\":${statusCode.value()}," +
-            "\"Code\":\"$code\"," +
-            "\"Error\":\"${exception.message}\"" +
-            "}"
+        "\"Message\":\"$message\"," +
+        "\"StatusCode\":${statusCode.value()}," +
+        "\"Code\":\"$code\"," +
+        "\"Error\":\"${exception.message}\"" +
+      "}"
 
     return ResponseEntity(
       responseBody,
