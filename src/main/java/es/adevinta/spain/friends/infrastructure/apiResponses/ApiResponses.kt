@@ -1,8 +1,7 @@
 package es.adevinta.spain.friends.infrastructure.apiResponses
 
-import es.adevinta.spain.friends.application.FriendDto
+import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
-import es.adevinta.spain.friends.domain.Friend
 import java.lang.Exception
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

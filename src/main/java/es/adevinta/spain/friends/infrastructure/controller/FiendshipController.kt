@@ -50,14 +50,6 @@ class FiendshipController(val friendshipHandler: FrienshipHandler ) {
 
   }
 
-  @GetMapping
-  fun getFriends(@RequestBody userName: LoggedUserDto): ResponseEntity<String> {
-
-
-    return OK_201.response()
-
-  }
-
   @ExceptionHandler(value = [FriendshipException::class])
   fun handleFriendshipException(e: FriendshipException): ResponseEntity<String> =
     when (e) {

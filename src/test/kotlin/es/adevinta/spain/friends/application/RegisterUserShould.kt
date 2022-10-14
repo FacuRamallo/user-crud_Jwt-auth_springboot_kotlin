@@ -35,7 +35,7 @@ class RegisterUserShould {
     val expectedMessage = InvalidUsernameException().message
 
     val exception = assertFailsWith<InvalidUsernameException> {
-      registerUser.create(newUserWhithWrongUserName)
+      registerUser.execute(newUserWhithWrongUserName)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -47,7 +47,7 @@ class RegisterUserShould {
     val expectedMessage = InvalidPasswordException().message
 
     val exception = assertFailsWith<InvalidPasswordException> {
-      registerUser.create(newUserWhithWrongPassword)
+      registerUser.execute(newUserWhithWrongPassword)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -62,7 +62,7 @@ class RegisterUserShould {
     given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPassword")
 
     val exception = assertFailsWith<NameAlreadyExistException> {
-      registerUser.create(newUserCommand)
+      registerUser.execute(newUserCommand)
     }
 
     assertEquals(expectedMessage, exception.message)
@@ -77,7 +77,7 @@ class RegisterUserShould {
 
     given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPasword")
 
-    registerUser.create(newUserCommand)
+    registerUser.execute(newUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 
@@ -95,7 +95,7 @@ class RegisterUserShould {
 
     given {passwordEncoderService.encodePassword(any())} .willReturn("encodedPassword")
 
-    registerUser.create(newUserCommand)
+    registerUser.execute(newUserCommand)
 
     val  userCaptorAdd = argumentCaptor<User>()
 

@@ -1,11 +1,8 @@
 package es.adevinta.spain.friends.infraestructure
 
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import com.nhaarman.mockito_kotlin.willReturn
-import es.adevinta.spain.friends.application.FriendDto
+import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.application.GetFriendsList
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User

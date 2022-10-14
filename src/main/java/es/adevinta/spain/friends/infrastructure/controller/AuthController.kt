@@ -38,15 +38,15 @@ class AuthController(val registerUser: RegisterUser, val authenticateUser: Authe
 
   @PostMapping("v1/signup")
   fun signUp(@RequestBody user: SignUpDto): ResponseEntity<String> {
-    val userToRegister = NewUserCommand(user.userName,user.password, user.roles?: setOf("ROLE_USER"))
+    val userToRegister = NewUserCommand(user.userName,user.password, user.roles)
 
-    registerUser.create(userToRegister)
+    registerUser.execute(userToRegister)
 
     return OK_201.response()
   }
 
   @PostMapping("v1/authenticatedUser")
-  fun signUp(): ResponseEntity<String> {
+  fun authenticatedUserName(): ResponseEntity<String> {
 
     val currentUser = authenticateUser.getCurrentUser()
 

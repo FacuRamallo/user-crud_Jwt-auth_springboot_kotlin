@@ -17,7 +17,7 @@ open class RegisterUser(
   private val passwordEncoder : PasswordEncoderService,
 ) {
 
-  open fun create(newUserCommand: NewUserCommand) {
+  open fun execute(newUserCommand: NewUserCommand) {
     val newUser = createUserFromCommand(newUserCommand)
     val userNameAlreadyExist = userRepository.exist(newUser.username);
     if(userNameAlreadyExist) throw NameAlreadyExistException(newUser.username.value)

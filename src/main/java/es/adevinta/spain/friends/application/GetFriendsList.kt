@@ -1,5 +1,6 @@
 package es.adevinta.spain.friends.application
 
+import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService

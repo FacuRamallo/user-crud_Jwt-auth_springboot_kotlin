@@ -3,6 +3,7 @@ package es.adevinta.spain.friends.application
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.willReturn
+import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.domain.Friend
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
 import es.adevinta.spain.friends.domain.Role.ROLE_USER

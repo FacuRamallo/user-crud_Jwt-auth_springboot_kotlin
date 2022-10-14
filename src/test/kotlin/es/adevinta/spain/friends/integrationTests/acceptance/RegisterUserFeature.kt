@@ -29,7 +29,6 @@ class RegisterUserFeature : IntegrationTest() {
   @Value("classpath:json/newAdminUser.json")
   private lateinit var newAdminUserDto: Resource
 
-
   @Value("classpath:json/existingUser.json")
   private lateinit var existingUserDto: Resource
 

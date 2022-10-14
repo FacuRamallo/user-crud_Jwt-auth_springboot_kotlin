@@ -1,17 +1,14 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
-import es.adevinta.spain.friends.application.FriendDto
-import es.adevinta.spain.friends.domain.Friend
+import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
 import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_203
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_205
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus.OK

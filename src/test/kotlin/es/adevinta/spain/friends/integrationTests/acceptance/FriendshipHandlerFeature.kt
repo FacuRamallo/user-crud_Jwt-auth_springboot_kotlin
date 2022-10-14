@@ -51,7 +51,7 @@ class FriendshipHandlerFeature: IntegrationTest() {
 
     val updatedFriendship = friendshipRepository.getFriendship(target.username,requester.username)
 
-    assertEquals(PENDING.name,updatedFriendship?.let { it.status.name })
+    assertEquals(PENDING.name, updatedFriendship?.status?.name)
   }
 
   @Test
