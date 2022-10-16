@@ -5,4 +5,5 @@ import es.adevinta.spain.friends.domain.PassWord
 interface PasswordEncoderService {
 
   fun encodePassword(value: PassWord): String
+
 }

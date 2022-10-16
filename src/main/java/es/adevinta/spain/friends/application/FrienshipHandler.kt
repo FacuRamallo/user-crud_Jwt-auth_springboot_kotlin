@@ -20,11 +20,11 @@ class FrienshipHandler(
 ) {
 
   fun execute(command: NewFriendshipRequestCommand){
-    val targetName = UserName( command.requestTo )
+    val targetName = UserName(command.requestTo)
     val targetExist = userRepository.exist(targetName)
-    val currentUserName = UserName( userAuthenticationService.getAuthenticatedUserName() )
+    val currentUserName = UserName(userAuthenticationService.getAuthenticatedUserName())
     val isSelfFriendshipRequest = isRequestingFriendshipToHimself(targetName, currentUserName)
-    val isFriendshipAlreadyRequested = friendshipAlreadyExistBetween( currentUserName, targetName )
+    val isFriendshipAlreadyRequested = friendshipAlreadyExistBetween(currentUserName, targetName)
 
     if (!targetExist) throw UserNameNotFoundException(targetName.value)
     if (isSelfFriendshipRequest) throw SelfFriendshipException()
@@ -34,14 +34,14 @@ class FrienshipHandler(
   }
 
   fun execute(command: FriendshipUpdateCommand){
-    val currentUserName = UserName( userAuthenticationService.getAuthenticatedUserName() )
-    val friendName = UserName( command.requestedFrom )
-    val frienshipExist = friendshipAlreadyExistBetween(currentUserName,friendName)
+    val currentUserName = UserName(userAuthenticationService.getAuthenticatedUserName())
+    val friendName = UserName(command.requestedFrom)
+    val friendshipExist = friendshipAlreadyExistBetween(currentUserName, friendName)
     val newFriendshipStatus = FriendshipStatus.valueOf(command.requestStatus)
 
-    if (!frienshipExist) throw FriendshipNotFoundException()
+    if (!friendshipExist) throw FriendshipNotFoundException()
 
-    friendshipRepository.updateStatus( currentUserName, friendName, newFriendshipStatus)
+    friendshipRepository.updateStatus(currentUserName, friendName, newFriendshipStatus)
   }
 
   private fun isRequestingFriendshipToHimself(target: UserName, current: UserName) = target.value == current.value

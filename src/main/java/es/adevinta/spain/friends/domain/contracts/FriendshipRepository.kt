@@ -13,7 +13,9 @@ interface FriendshipRepository {
   fun newFriendship(requester: UserName, target: UserName)
 
   fun getFriends(userName: UserName) : List<Friend>?
+
   fun updateStatus(requester: UserName, target: UserName , status: FriendshipStatus)
 
   fun getFriendship( requester : UserName , target : UserName ) : Friendship?
+
 }

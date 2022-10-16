@@ -9,16 +9,13 @@ import es.adevinta.spain.friends.domain.exceptions.SelfFriendshipException
 import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_103
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_104
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_203
 import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipReqDto
 import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
-import es.adevinta.spain.friends.infrastructure.controller.dtos.LoggedUserDto
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -26,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/v1/friendship")
-class FiendshipController(val friendshipHandler: FrienshipHandler ) {
+class FriendshipController(val friendshipHandler: FrienshipHandler ) {
 
   @PostMapping
   fun newFriendshipRequest(@RequestBody reqFriendTo: FriendshipReqDto): ResponseEntity<String> {

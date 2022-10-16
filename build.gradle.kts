@@ -8,13 +8,31 @@ import org.jetbrains.kotlin.ir.backend.js.compile
 plugins {
   id("org.springframework.boot") version "2.6.3"
   id("io.spring.dependency-management") version "1.0.11.RELEASE"
+  id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.6"
   kotlin("jvm") version "1.6.10"
   kotlin("plugin.spring") version "1.6.10"
 }
 
+
 group = "es.adevinta"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
+
+sourceSets{
+  create("integrationTests"){
+    compileClasspath += sourceSets.main.get().output
+    runtimeClasspath += sourceSets.main.get().output
+  }
+
+}
+
+val integrationTestsImplementation: Configuration by configurations.getting {
+  extendsFrom(configurations.implementation.get())
+  extendsFrom(configurations.testImplementation.get())
+}
+
+configurations["integrationTestsRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+configurations["integrationTestsRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
 
 repositories {
   mavenCentral()
@@ -24,13 +42,6 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-configuration-processor")
-
-
-    // Uncomment the next line if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
-    //'org.bouncycastle:bcprov-jdk15on:1.70',
-   // or 'io.jsonwebtoken:jjwt-gson:0.11.5' for gson
-
-
   //jwt
   implementation("io.jsonwebtoken:jjwt-api:0.11.5")
   implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
@@ -50,7 +61,6 @@ dependencies {
   testImplementation("org.springframework.boot:spring-boot-test:2.7.0")
   testImplementation("com.github.tomakehurst:wiremock:2.27.2")
   testImplementation("io.rest-assured:spring-mock-mvc:4.5.1")
-
   testImplementation("org.testcontainers:junit-jupiter:1.17.2")
 
   //Kotli test
@@ -59,10 +69,26 @@ dependencies {
   testImplementation("com.nhaarman:mockito-kotlin:1.6.0")
 }
 
+val integrationTests = task<Test>("integrationTests") {
+  description = "Runs integration tests."
+  group = "verification"
+
+  testClassesDirs = sourceSets["integrationTests"].output.classesDirs
+  classpath = sourceSets["integrationTests"].runtimeClasspath
+  filter {
+    includeTestsMatching("ApplicationIntegrationTest")
+  }
+  shouldRunAfter("test")
+}
+
+tasks.check { dependsOn(integrationTests) }
+
+
 tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = listOf("-Xjsr305=strict")
     jvmTarget = "11"
+
   }
 }
 

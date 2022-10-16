@@ -16,8 +16,6 @@ import org.springframework.security.test.context.support.WithUserDetails
 
 class ListFriendsFeature : IntegrationTest() {
 
-
-
   @Test
   @WithUserDetails("user001")
   fun `should list friends of a registered user`(){

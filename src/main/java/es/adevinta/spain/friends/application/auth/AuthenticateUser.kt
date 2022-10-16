@@ -29,6 +29,4 @@ class AuthenticateUser(
   fun getCurrentUser(): String {
     return userAuthenticationService.getAuthenticatedUserName()
   }
-
-  private fun mapToRoleSet(stingRoleSet: Set<String>?):Set<Role>? = stingRoleSet?.map{ Role.valueOf(it) }?.toSet()
 }

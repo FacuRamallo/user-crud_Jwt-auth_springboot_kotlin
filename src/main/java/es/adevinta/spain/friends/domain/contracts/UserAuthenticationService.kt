@@ -12,4 +12,5 @@ interface UserAuthenticationService {
   fun getAuthenticatedUserDetails() : AuthUserDto
 
   fun getAuthenticatedUserName(): String
+
 }

@@ -59,13 +59,13 @@ class CustomUserDetailsImpl private constructor(
 
   override fun hashCode(): Int {
     var result = serialVersionUID.hashCode()
-    result = 31 * result + userName.hashCode()
-    result = 31 * result + passWord.hashCode()
-    result = 31 * result + authorities.hashCode()
-    result = 31 * result + isAccountNonExpired.hashCode()
-    result = 31 * result + isAccountNonLocked.hashCode()
-    result = 31 * result + isCredentialsNonExpired.hashCode()
-    result = 31 * result + isEnabled.hashCode()
+    result += userName.hashCode()
+    result += passWord.hashCode()
+    result += authorities.hashCode()
+    result += isAccountNonExpired.hashCode()
+    result += isAccountNonLocked.hashCode()
+    result += isCredentialsNonExpired.hashCode()
+    result += isEnabled.hashCode()
     return result
   }
 }

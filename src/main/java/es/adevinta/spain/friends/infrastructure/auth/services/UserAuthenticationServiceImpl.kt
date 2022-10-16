@@ -33,9 +33,7 @@ class UserAuthenticationServiceImpl(private val authenticationManager: Authentic
   override fun getAuthenticatedUserDetails() : AuthUserDto {
     val authUserDetails = getSecurityContextAuthentication().principal as CustomUserDetailsImpl
 
-    val roles: List<String> = authUserDetails.authorities.stream()
-        .map { item -> item.authority }
-        .collect(Collectors.toList())
+    val roles: List<String> = authUserDetails.authorities.map { item -> item.authority }
 
     return AuthUserDto(
       getAuthenticatedUserToken(),

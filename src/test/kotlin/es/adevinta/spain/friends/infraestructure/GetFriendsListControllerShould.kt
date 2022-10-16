@@ -1,7 +1,9 @@
 package es.adevinta.spain.friends.infraestructure
 
+import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.willReturn
 import es.adevinta.spain.friends.application.dtos.FriendDto
 import es.adevinta.spain.friends.application.GetFriendsList
 import es.adevinta.spain.friends.domain.Role.ROLE_USER
@@ -19,9 +21,8 @@ class GetFriendsListControllerShould {
 
   @Test
   fun `return null when authenticated user has no friends`(){
-    whenever{ mockGetFriendsList.execute() }.thenReturn( null )
-
-    val expected = OK_204.friendsListResponse(null)
+    given{ mockGetFriendsList.execute() }.willReturn { emptyList() }
+    val expected = OK_204.friendsListResponse(emptyList())
 
     val sut = getFriendsListController.getFriendsList()
 
