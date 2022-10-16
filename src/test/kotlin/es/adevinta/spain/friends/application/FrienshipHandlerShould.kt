@@ -65,7 +65,7 @@ class FrienshipHandlerShould {
     val friendshipTargetArgCaptor = argumentCaptor<UserName>()
     val friendshipStatusArgCaptor = argumentCaptor<FriendshipStatus>()
 
-    verify(friendshipRepository, times(1)).updateStatus(
+    verify(friendshipRepository).updateStatus(
       friendshipRequesterArgCaptor.capture(),
       friendshipTargetArgCaptor.capture(),
       friendshipStatusArgCaptor.capture()
@@ -89,7 +89,7 @@ class FrienshipHandlerShould {
     val friendshipTargetArgCaptor = argumentCaptor<UserName>()
     val friendshipStatusArgCaptor = argumentCaptor<FriendshipStatus>()
 
-    verify(friendshipRepository, times(1)).updateStatus(
+    verify(friendshipRepository).updateStatus(
       friendshipRequesterArgCaptor.capture(),
       friendshipTargetArgCaptor.capture(),
       friendshipStatusArgCaptor.capture()
@@ -100,7 +100,6 @@ class FrienshipHandlerShould {
     assertEquals(CANCELED,friendshipStatusArgCaptor.firstValue)
 
   }
-
 
   @Test
   fun `fail if target user does't exist`(){

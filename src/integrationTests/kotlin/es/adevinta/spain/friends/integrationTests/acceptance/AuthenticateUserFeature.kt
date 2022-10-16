@@ -1,10 +1,6 @@
 package es.adevinta.spain.friends.integrationTests.acceptance
 
 
-import es.adevinta.spain.friends.domain.PassWord
-import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.integrationTests.IntegrationTest
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given

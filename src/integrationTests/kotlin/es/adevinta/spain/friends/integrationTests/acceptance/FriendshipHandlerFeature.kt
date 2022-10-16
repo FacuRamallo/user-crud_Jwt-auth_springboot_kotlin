@@ -25,7 +25,6 @@ import org.springframework.security.test.context.support.WithUserDetails
 
 class FriendshipHandlerFeature: IntegrationTest() {
 
-
   private val requester = User(UserName("user001"), "123654789",null)
   private val target = User(UserName("user002"), "123456789", setOf(ROLE_USER))
   private val friendshipRequestDto = FriendshipReqDto("user002")

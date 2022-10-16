@@ -24,10 +24,10 @@ class GetFriensListShould {
   fun `return null when current authenticated user have no friends`() {
     val currUser = User(UserName("user001"), "123654789", setOf(ROLE_USER))
 
-    val expectedFriendsList = null
+    val expectedFriendsList = emptyList<FriendDto>()
 
     given { userAuthenticationService.getAuthenticatedUserName() }.willReturn { currUser.username.value }
-    given { friendshipRepository.getFriends(currUser.username) }.willReturn { null }
+    given { friendshipRepository.getFriends(currUser.username) }.willReturn { emptyList() }
 
     val sut = getFriendsList.execute()
 

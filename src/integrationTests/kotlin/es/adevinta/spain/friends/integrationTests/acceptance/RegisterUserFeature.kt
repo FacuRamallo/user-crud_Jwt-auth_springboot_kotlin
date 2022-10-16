@@ -32,27 +32,6 @@ class RegisterUserFeature : IntegrationTest() {
   @Value("classpath:json/existingUser.json")
   private lateinit var existingUserDto: Resource
 
-  @Value("classpath:json/newUserWithWrongName.json")
-  private lateinit var newUserWrongNameDto: Resource
-
-  @Value("classpath:json/newUserWithWrongPassword.json")
-  private lateinit var newUserWrongPasswordDto: Resource
-
-  @Test
-  fun `should fail when username is invalid`(){
-
-    given()
-      .contentType("application/json")
-      .body(newUserWrongNameDto.file)
-      .post("v1/signup")
-      .then()
-      .status(BAD_REQUEST)
-      .contentType(JSON)
-      .body(equalTo(ERROR_100.response().body))
-
-
-  }
-
   @Test
   fun `should fail when username already exist`(){
 
@@ -64,21 +43,6 @@ class RegisterUserFeature : IntegrationTest() {
       .status(BAD_REQUEST)
       .contentType(JSON)
       .body(equalTo(ERROR_102.response().body))
-
-
-  }
-
-  @Test
-  fun `should fail when password is invalid`(){
-
-    given()
-      .contentType("application/json")
-      .body(newUserWrongPasswordDto.file)
-      .post("v1/signup")
-      .then()
-      .status(BAD_REQUEST)
-      .contentType(JSON)
-      .body(equalTo(ERROR_101.response().body))
 
   }
 
