@@ -18,7 +18,6 @@ class CustomUserDetailsImpl private constructor(
 ) : UserDetails {
 
   companion object {
-
     fun build(user: User): CustomUserDetailsImpl {
 
       val authorities: List<GrantedAuthority> = user.roles?.map { role -> SimpleGrantedAuthority(role.roleName) } ?: emptyList()
