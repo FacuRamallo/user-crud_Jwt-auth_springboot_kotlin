@@ -4,7 +4,6 @@ import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
 import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
 import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl
 import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
-import java.util.stream.Collectors
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication

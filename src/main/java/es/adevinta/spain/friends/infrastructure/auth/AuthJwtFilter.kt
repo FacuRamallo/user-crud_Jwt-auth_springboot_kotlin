@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
-import org.springframework.util.StringUtils
 import org.springframework.util.StringUtils.hasText
 import org.springframework.web.filter.OncePerRequestFilter
 
@@ -31,7 +30,8 @@ class AuthJwtFilter(
         val userName: String = jwtUtils.getUserNameFromJwt(jwt)
 
         val userDetails: UserDetails = userDetailsService.loadUserByUsername(userName)
-        val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+        val authentication =
+          UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
           .apply { details = WebAuthenticationDetailsSource().buildDetails(request) }
 
         SecurityContextHolder.getContext().authentication = authentication

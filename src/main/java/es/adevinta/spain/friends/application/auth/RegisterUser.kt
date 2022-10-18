@@ -26,7 +26,7 @@ open class RegisterUser(
 
   private fun createUserFromCommand(newUserCommand: NewUserCommand) : User {
     val userPassWord : PassWord = PassWord(newUserCommand.passWord)
-    val userPasswordEncoded= passwordEncoder.encodePassword(userPassWord)
+    val userPasswordEncoded= passwordEncoder.encodePassword(userPassWord.value)
     val role = mutableSetOf<Role>()
     newUserCommand.roles.apply { if (isNullOrEmpty()) role.add(ROLE_USER) } ?.forEach {
       when (it) {
