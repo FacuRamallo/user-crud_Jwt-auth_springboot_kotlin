@@ -4,8 +4,6 @@ import es.adevinta.spain.friends.domain.Friend
 import es.adevinta.spain.friends.domain.Friendship
 import es.adevinta.spain.friends.domain.FriendshipStatus
 import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
-import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.User
 import es.adevinta.spain.friends.domain.UserName
 import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
 import es.adevinta.spain.friends.domain.exceptions.UserRepositoryException
@@ -20,23 +18,23 @@ class PostgreSQLFriendshipRepository(
   private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : FriendshipRepository {
 
-  override fun existBetween(username1: UserName, username2: UserName): Boolean {
+  override fun existBetween(requester: UserName, target: UserName): Boolean {
     val sql = """
       SELECT EXISTS(SELECT * FROM friendships
       WHERE (requestfrom,requestto) = (:requestFrom,:requestTo) OR (requestfrom,requestto) = (:requestTo,:requestFrom)
       AND (status = :pending OR status = :accepted))
     """
     val existFriendSqlParameterSource = MapSqlParameterSource()
-    existFriendSqlParameterSource.addValue("requestFrom", username1.value)
-    existFriendSqlParameterSource.addValue("requestTo", username2.value)
+    existFriendSqlParameterSource.addValue("requestFrom", requester.value)
+    existFriendSqlParameterSource.addValue("requestTo", target.value)
     existFriendSqlParameterSource.addValue("pending", FriendshipStatus.PENDING.name)
-    existFriendSqlParameterSource.addValue("accepted", FriendshipStatus.ACCEPTED.name)
+    existFriendSqlParameterSource.addValue("accepted", ACCEPTED.name)
 
     try {
       return jdbcTemplate.queryForObject(sql, existFriendSqlParameterSource, Boolean::class.java)!!
     } catch (e: DataAccessException) {
       throw UserRepositoryException(
-        "Error in axistFriendship method for friendship between user ${username1.value} and ${username2.value}", e
+        "Error in axistFriendship method for friendship between user ${requester.value} and ${target.value}", e
       )
     }
   }

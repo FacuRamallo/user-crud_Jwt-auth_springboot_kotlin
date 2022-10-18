@@ -86,7 +86,7 @@ class IntegrationTest {
   }
 
   fun createTestUser(username: String, password: String, roles: Set<Role>?) {
-    val encodedPassword = passwordEncoderService.encodePassword(PassWord(password))
+    val encodedPassword = passwordEncoderService.encodePassword(PassWord(password).value)
     val testUser : User = if(roles.isNullOrEmpty()){
       User(UserName(username), encodedPassword, emptySet())
     }else {
