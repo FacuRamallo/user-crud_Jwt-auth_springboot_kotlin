@@ -1,6 +1,4 @@
-[![CI](https://github.com/AdevintaSpain/backend-coding-challenge-java-empty/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/AdevintaSpain/backend-coding-challenge-java-empty/actions/workflows/gradle.yml)
-
-# Adevinta Spain Backend Coding Challenge
+# Backend Coding Challenge
 
 Please load this project in your favourite IDE and check if everything works executing:
 
@@ -8,7 +6,7 @@ Please load this project in your favourite IDE and check if everything works exe
 ./gradlew bootRun
 ```
 
-# Adevinta Spain Backend Coding Challenge Java/Kotlin
+# Coding Challenge Java/Kotlin
 
 Welcome to our coding challenge, hope you enjoy it!
 
@@ -38,23 +36,9 @@ The use cases that need to be implemented are:
 * Friends
     * List friends of a registered user.
 
-There is one drawback, we have to maintain the API of the legacy service, which is awful but nothing we can do 😞.
-We hope we can refactor the API in a future iteration, **but not in this challenge**.
-
-So we provide you with an initial implementation of controllers under package `es.adevinta.spain.friends.legacy` that fulfill the legacy API and you can work from there.
-
-The legacy team has provided us with a script that you can execute to check if your implementation is on the right path.
-
 Make sure [docker](https://www.docker.com/products/docker-desktop) is started and execute:
 
-* `./scripts/legacy-test.sh` on mac/linux
-* `./scripts/legacy-test.ps1` on windows
-
-and expect all checks to pass.
-
 No database needed, you can persist everything in memory.
-
-Please create a pull request with your changes and we will review it. A github action will automatically execute the legacy-test and any new test you may have created.
 
 We expect from you to apply good practices and be proud of what you do. Good luck!
 
