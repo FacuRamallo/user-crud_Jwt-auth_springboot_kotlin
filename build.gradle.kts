@@ -3,7 +3,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
   id("org.springframework.boot") version "2.6.3"
@@ -14,7 +13,7 @@ plugins {
 }
 
 
-group = "es.adevinta"
+group = "com.facundo"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
@@ -72,7 +71,7 @@ dependencies {
 
 val integrationTests = task<Test>("integrationTests") {
   description = "Runs integration tests."
-  group = "verification"
+  group = "com.facundo"
 
   testClassesDirs = sourceSets["integrationTests"].output.classesDirs
   classpath = sourceSets["integrationTests"].runtimeClasspath
