@@ -3,14 +3,14 @@ package com.facundo.friends.application
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.willReturn
-import es.adevinta.spain.friends.application.dtos.FriendDto
-import es.adevinta.spain.friends.domain.Friend
-import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
-import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
+import com.facundo.friends.application.dtos.FriendDto
+import com.facundo.friends.domain.Friend
+import com.facundo.friends.domain.FriendshipStatus.ACCEPTED
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.FriendshipRepository
+import com.facundo.friends.domain.contracts.UserAuthenticationService
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 

@@ -1,15 +1,15 @@
 package com.facundo.friends.application.auth
 
-import es.adevinta.spain.friends.application.auth.commands.NewUserCommand
-import es.adevinta.spain.friends.domain.PassWord
-import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.PasswordEncoderService
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.NameAlreadyExistException
+import com.facundo.friends.application.auth.commands.NewUserCommand
+import com.facundo.friends.domain.PassWord
+import com.facundo.friends.domain.Role
+import com.facundo.friends.domain.Role.ROLE_ADMIN
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.PasswordEncoderService
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.domain.exceptions.NameAlreadyExistException
 
 
 open class RegisterUser(

@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 
 
-class DatabaseTestCase : com.facundo.friends.integrationTests.IntegrationTest() {
+
+class DatabaseTestCase : IntegrationTest() {
 
   @Autowired
   private lateinit var dataSource: DataSource

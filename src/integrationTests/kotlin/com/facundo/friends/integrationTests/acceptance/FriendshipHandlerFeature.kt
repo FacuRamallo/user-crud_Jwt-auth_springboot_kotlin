@@ -1,18 +1,18 @@
 package com.facundo.friends.integrationTests.acceptance
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
-import es.adevinta.spain.friends.domain.FriendshipStatus.CANCELED
-import es.adevinta.spain.friends.domain.FriendshipStatus.PENDING
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistException
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_104
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_203
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
-import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipReqDto
-import es.adevinta.spain.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
+import com.facundo.friends.domain.FriendshipStatus.ACCEPTED
+import com.facundo.friends.domain.FriendshipStatus.CANCELED
+import com.facundo.friends.domain.FriendshipStatus.PENDING
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.exceptions.FriendshipAlreadyExistException
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.ERROR_104
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.OK_203
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.OK_204
+import com.facundo.friends.infrastructure.controller.dtos.FriendshipReqDto
+import com.facundo.friends.infrastructure.controller.dtos.FriendshipUpdateReqDto
 import com.facundo.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import kotlin.test.assertEquals
@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.OK
 import org.springframework.security.test.context.support.WithUserDetails
 
-class FriendshipHandlerFeature: com.facundo.friends.integrationTests.IntegrationTest() {
+class FriendshipHandlerFeature: IntegrationTest() {
 
   private val requester = User(UserName("user001"), "123654789",null)
   private val target = User(UserName("user002"), "123456789", setOf(ROLE_USER))

@@ -1,7 +1,7 @@
 package com.facundo.friends.domain.contracts
 
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
 
 interface UserRepository {
   fun exist(userName: UserName) : Boolean

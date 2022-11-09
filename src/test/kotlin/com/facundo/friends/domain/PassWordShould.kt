@@ -1,6 +1,6 @@
 package com.facundo.friends.domain
 
-import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
+import com.facundo.friends.domain.exceptions.InvalidPasswordException
 import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
 

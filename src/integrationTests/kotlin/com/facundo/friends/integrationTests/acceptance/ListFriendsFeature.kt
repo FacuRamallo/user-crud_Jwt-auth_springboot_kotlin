@@ -1,12 +1,12 @@
 package com.facundo.friends.integrationTests.acceptance
 
-import es.adevinta.spain.friends.application.dtos.FriendDto
-import es.adevinta.spain.friends.domain.FriendshipStatus
-import es.adevinta.spain.friends.domain.FriendshipStatus.ACCEPTED
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_205
+import com.facundo.friends.application.dtos.FriendDto
+import com.facundo.friends.domain.FriendshipStatus
+import com.facundo.friends.domain.FriendshipStatus.ACCEPTED
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.OK_205
 import com.facundo.friends.integrationTests.IntegrationTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import org.hamcrest.Matchers.equalTo
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus.OK
 import org.springframework.security.test.context.support.WithUserDetails
 
-class ListFriendsFeature : com.facundo.friends.integrationTests.IntegrationTest() {
+class ListFriendsFeature : IntegrationTest() {
 
   @Test
   @WithUserDetails("user001")

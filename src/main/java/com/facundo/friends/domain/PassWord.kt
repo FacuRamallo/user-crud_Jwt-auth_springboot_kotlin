@@ -1,6 +1,6 @@
 package com.facundo.friends.domain
 
-import es.adevinta.spain.friends.domain.exceptions.InvalidPasswordException
+import com.facundo.friends.domain.exceptions.InvalidPasswordException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.String

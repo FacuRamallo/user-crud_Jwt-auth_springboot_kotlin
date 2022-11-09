@@ -4,13 +4,13 @@ import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.nhaarman.mockito_kotlin.willReturn
-import es.adevinta.spain.friends.application.dtos.FriendDto
-import es.adevinta.spain.friends.application.GetFriendsList
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_204
-import es.adevinta.spain.friends.infrastructure.controller.GetFriendsListController
+import com.facundo.friends.application.dtos.FriendDto
+import com.facundo.friends.application.GetFriendsList
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.OK_204
+import com.facundo.friends.infrastructure.controller.GetFriendsListController
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 

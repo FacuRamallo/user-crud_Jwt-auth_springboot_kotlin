@@ -1,11 +1,12 @@
 package com.facundo.friends
 
-import es.adevinta.spain.friends.integrationTests.acceptance.AuthenticateUserFeature
-import es.adevinta.spain.friends.integrationTests.acceptance.FriendshipHandlerFeature
-import es.adevinta.spain.friends.integrationTests.acceptance.ListFriendsFeature
-import es.adevinta.spain.friends.integrationTests.acceptance.RegisterUserFeature
-import es.adevinta.spain.friends.integrationTests.database.DatabaseTestCase
-import es.adevinta.spain.friends.integrationTests.helper.DockerComposeHelper
+import com.facundo.friends.ApplicationIntegrationTest.Companion.dockerComposeContainer
+import com.facundo.friends.integrationTests.acceptance.AuthenticateUserFeature
+import com.facundo.friends.integrationTests.acceptance.FriendshipHandlerFeature
+import com.facundo.friends.integrationTests.acceptance.ListFriendsFeature
+import com.facundo.friends.integrationTests.acceptance.RegisterUserFeature
+import com.facundo.friends.integrationTests.database.DatabaseTestCase
+import com.facundo.friends.integrationTests.helper.DockerComposeHelper
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.testcontainers.junit.jupiter.Container
@@ -21,7 +22,7 @@ class ApplicationIntegrationTest {
     @BeforeAll
     @JvmStatic
     fun setSystemProperties() {
-      DockerComposeHelper.setSystemProperties(com.facundo.friends.ApplicationIntegrationTest.Companion.dockerComposeContainer)
+      DockerComposeHelper.setSystemProperties(dockerComposeContainer)
     }
   }
 

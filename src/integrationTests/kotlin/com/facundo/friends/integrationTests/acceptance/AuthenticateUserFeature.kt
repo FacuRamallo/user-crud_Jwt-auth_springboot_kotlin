@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.security.test.context.support.WithUserDetails
 
-class AuthenticateUserFeature : com.facundo.friends.integrationTests.IntegrationTest() {
+class AuthenticateUserFeature : IntegrationTest() {
 
   @Value("classpath:json/existingUser.json")
   private lateinit var existingUserDto: Resource

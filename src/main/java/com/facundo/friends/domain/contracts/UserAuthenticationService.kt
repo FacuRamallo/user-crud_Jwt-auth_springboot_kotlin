@@ -1,6 +1,6 @@
 package com.facundo.friends.domain.contracts
 
-import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
+import com.facundo.friends.application.auth.dtos.AuthUserDto
 
 
 interface UserAuthenticationService {

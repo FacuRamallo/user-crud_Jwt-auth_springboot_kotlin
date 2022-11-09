@@ -1,6 +1,6 @@
 package com.facundo.friends.infrastructure.repository
 
-import es.adevinta.spain.friends.domain.Role
+import com.facundo.friends.domain.Role
 import java.sql.ResultSet
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource

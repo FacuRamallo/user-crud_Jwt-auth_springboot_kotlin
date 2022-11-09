@@ -1,10 +1,10 @@
 package com.facundo.friends.infrastructure.configuration
 
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.infrastructure.auth.AuthEntryPointJwt
-import es.adevinta.spain.friends.infrastructure.auth.AuthJwtFilter
-import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsServiceImpl
-import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.infrastructure.auth.AuthEntryPointJwt
+import com.facundo.friends.infrastructure.auth.AuthJwtFilter
+import com.facundo.friends.infrastructure.auth.CustomUserDetailsServiceImpl
+import com.facundo.friends.infrastructure.auth.JwtUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean

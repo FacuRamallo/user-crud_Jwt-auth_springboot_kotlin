@@ -1,16 +1,16 @@
 package com.facundo.friends.application
 
-import es.adevinta.spain.friends.application.commands.FriendshipUpdateCommand
-import es.adevinta.spain.friends.application.commands.NewFriendshipRequestCommand
-import es.adevinta.spain.friends.domain.FriendshipStatus
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
-import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.FriendshipAlreadyExistException
-import es.adevinta.spain.friends.domain.exceptions.FriendshipNotFoundException
-import es.adevinta.spain.friends.domain.exceptions.SelfFriendshipException
-import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
+import com.facundo.friends.application.commands.FriendshipUpdateCommand
+import com.facundo.friends.application.commands.NewFriendshipRequestCommand
+import com.facundo.friends.domain.FriendshipStatus
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.FriendshipRepository
+import com.facundo.friends.domain.contracts.UserAuthenticationService
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.domain.exceptions.FriendshipAlreadyExistException
+import com.facundo.friends.domain.exceptions.FriendshipNotFoundException
+import com.facundo.friends.domain.exceptions.SelfFriendshipException
+import com.facundo.friends.domain.exceptions.UserNameNotFoundException
 
 
 class FrienshipHandler(

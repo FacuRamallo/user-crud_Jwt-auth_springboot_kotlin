@@ -1,6 +1,6 @@
 package com.facundo.friends.infrastructure.auth.services
 
-import es.adevinta.spain.friends.domain.contracts.PasswordEncoderService
+import com.facundo.friends.domain.contracts.PasswordEncoderService
 import org.springframework.security.crypto.password.PasswordEncoder
 
 

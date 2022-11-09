@@ -4,16 +4,16 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.facundo.friends.FriendsApplication
-import es.adevinta.spain.friends.domain.PassWord
-import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
-import es.adevinta.spain.friends.integrationTests.helper.UserRepositoryForTest
+import com.facundo.friends.domain.PassWord
+import com.facundo.friends.domain.Role
+import com.facundo.friends.domain.Role.ROLE_ADMIN
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.FriendshipRepository
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.infrastructure.auth.services.PasswordEncoderServiceImpl
+import com.facundo.friends.integrationTests.helper.UserRepositoryForTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.mockMvc
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
 @SpringBootTest(
-  classes = [com.facundo.friends.FriendsApplication::class]
+  classes = [FriendsApplication::class]
 )
 @ExtendWith(SpringExtension::class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)

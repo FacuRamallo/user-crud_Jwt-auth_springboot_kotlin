@@ -1,9 +1,9 @@
 package com.facundo.friends.infrastructure.auth.services
 
-import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
-import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
-import es.adevinta.spain.friends.infrastructure.auth.CustomUserDetailsImpl
-import es.adevinta.spain.friends.infrastructure.auth.JwtUtils
+import com.facundo.friends.application.auth.dtos.AuthUserDto
+import com.facundo.friends.domain.contracts.UserAuthenticationService
+import com.facundo.friends.infrastructure.auth.CustomUserDetailsImpl
+import com.facundo.friends.infrastructure.auth.JwtUtils
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication

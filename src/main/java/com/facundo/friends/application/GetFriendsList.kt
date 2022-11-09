@@ -1,9 +1,9 @@
 package com.facundo.friends.application
 
-import es.adevinta.spain.friends.application.dtos.FriendDto
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.FriendshipRepository
-import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
+import com.facundo.friends.application.dtos.FriendDto
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.FriendshipRepository
+import com.facundo.friends.domain.contracts.UserAuthenticationService
 
 open class GetFriendsList(
   private val friendshipRepository : FriendshipRepository,

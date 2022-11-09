@@ -1,8 +1,8 @@
 package com.facundo.friends.infrastructure.auth
 
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.UserNameNotFoundException
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.domain.exceptions.UserNameNotFoundException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.transaction.annotation.Transactional

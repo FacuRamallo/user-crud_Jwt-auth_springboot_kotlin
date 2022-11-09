@@ -1,7 +1,7 @@
 package com.facundo.friends.infrastructure.apiResponses
 
-import es.adevinta.spain.friends.application.dtos.FriendDto
-import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
+import com.facundo.friends.application.dtos.FriendDto
+import com.facundo.friends.application.auth.dtos.AuthUserDto
 import java.lang.Exception
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

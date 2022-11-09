@@ -1,15 +1,12 @@
 package com.facundo.friends.integrationTests.acceptance
 
-import es.adevinta.spain.friends.domain.PassWord
-import es.adevinta.spain.friends.domain.Role.ROLE_ADMIN
-import es.adevinta.spain.friends.domain.Role.ROLE_USER
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
+import com.facundo.friends.domain.Role.ROLE_ADMIN
+import com.facundo.friends.domain.Role.ROLE_USER
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.ERROR_102
+import com.facundo.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import com.facundo.friends.integrationTests.IntegrationTest
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_100
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_101
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.ERROR_102
-import es.adevinta.spain.friends.infrastructure.apiResponses.ApiResponses.OK_201
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import kotlin.test.assertEquals
@@ -21,7 +18,7 @@ import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.CREATED
 
-class RegisterUserFeature : com.facundo.friends.integrationTests.IntegrationTest() {
+class RegisterUserFeature : IntegrationTest() {
 
   @Value("classpath:json/newUser.json")
   private lateinit var newUserDto: Resource

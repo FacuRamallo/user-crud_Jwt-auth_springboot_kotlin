@@ -1,10 +1,9 @@
 package com.facundo.friends.domain.contracts
 
-import es.adevinta.spain.friends.domain.Friend
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.Friendship
-import es.adevinta.spain.friends.domain.FriendshipStatus
-import es.adevinta.spain.friends.domain.User
+import com.facundo.friends.domain.Friend
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.Friendship
+import com.facundo.friends.domain.FriendshipStatus
 
 interface FriendshipRepository {
 

@@ -1,6 +1,6 @@
 package com.facundo.friends.infrastructure.repository
 
-import es.adevinta.spain.friends.domain.Role
+import com.facundo.friends.domain.Role
 
 interface RolesMapper {
 

@@ -1,9 +1,9 @@
 package com.facundo.friends.infrastructure.repository
 
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.UserRepository
-import es.adevinta.spain.friends.domain.exceptions.UserRepositoryException
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.UserRepository
+import com.facundo.friends.domain.exceptions.UserRepositoryException
 import java.sql.ResultSet
 import java.time.LocalDateTime.now
 import org.springframework.dao.DataAccessException

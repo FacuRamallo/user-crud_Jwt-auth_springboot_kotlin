@@ -1,12 +1,11 @@
 package com.facundo.friends.application.auth
 
-import es.adevinta.spain.friends.application.auth.commands.AuthenticateUserCommand
-import es.adevinta.spain.friends.application.auth.dtos.AuthUserDto
-import es.adevinta.spain.friends.domain.PassWord
-import es.adevinta.spain.friends.domain.Role
-import es.adevinta.spain.friends.domain.User
-import es.adevinta.spain.friends.domain.UserName
-import es.adevinta.spain.friends.domain.contracts.UserAuthenticationService
+import com.facundo.friends.application.auth.commands.AuthenticateUserCommand
+import com.facundo.friends.application.auth.dtos.AuthUserDto
+import com.facundo.friends.domain.PassWord
+import com.facundo.friends.domain.User
+import com.facundo.friends.domain.UserName
+import com.facundo.friends.domain.contracts.UserAuthenticationService
 
 class AuthenticateUser(
   private val userAuthenticationService: UserAuthenticationService,

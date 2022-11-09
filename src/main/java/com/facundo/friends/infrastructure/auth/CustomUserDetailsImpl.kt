@@ -1,7 +1,6 @@
 package com.facundo.friends.infrastructure.auth
 
-import es.adevinta.spain.friends.domain.User
-import java.util.stream.Collectors
+import com.facundo.friends.domain.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
