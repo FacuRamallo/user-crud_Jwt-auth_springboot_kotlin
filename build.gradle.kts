@@ -44,7 +44,7 @@ dependencies {
   //jwt
   implementation("io.jsonwebtoken:jjwt-api:0.11.5")
   implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
   runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -53,15 +53,14 @@ dependencies {
 
   //Databse
   implementation("org.springframework.boot:spring-boot-starter-jdbc")
-  implementation("org.postgresql:postgresql:42.3.4")
-  implementation("org.flywaydb:flyway-core:8.5.10")
+  implementation("org.postgresql:postgresql:42.5.0")
+  implementation("org.flywaydb:flyway-core:9.7.0")
 
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("org.springframework.security:spring-security-test")
-  testImplementation("org.springframework.boot:spring-boot-test:2.7.0")
-  testImplementation("com.github.tomakehurst:wiremock:2.27.2")
-  testImplementation("io.rest-assured:spring-mock-mvc:4.5.1")
-  testImplementation("org.testcontainers:junit-jupiter:1.17.2")
+  testImplementation("org.springframework.boot:spring-boot-test:2.7.5")
+  testImplementation("io.rest-assured:spring-mock-mvc:5.2.0")
+  testImplementation("org.testcontainers:junit-jupiter:1.17.4")
 
   //Kotli test
   testImplementation("org.jetbrains.kotlin:kotlin-test")
